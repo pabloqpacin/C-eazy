@@ -1,3 +1,10 @@
 # All .log and .todo files
 *.log
 *.todo
+
+# Ignore backups and 'test'
+bak/
+test/
+
+# All PDF files
+*.pdf
