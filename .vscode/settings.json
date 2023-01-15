@@ -2,4 +2,8 @@
     "files.associations": {
         "stdio.h": "c"
     }
+    ,"editor.rulers": [
+        80,
+        120
+    ]
 }
