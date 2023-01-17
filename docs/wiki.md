@@ -1,7 +1,11 @@
 # C wiki
 
 
-## .h libraries
+## Headers .h
+
+<!-- random documentation
+- https://stackoverflow.com/questions/55420836/is-it-good-practice-to-always-include-the-standard-headers
+-->
 
 | Section | library    | functionality         | notes                  |
 | ------- | ----       | --------              | ---                    |
@@ -50,7 +54,7 @@ gcc foo.c -o foo -lm
 </details>
 
 
-## commands/functions
+## Functions - Commands
 
 | Section | Function | functionality          |
 | ------- | ----     | --------               |
@@ -63,7 +67,7 @@ gcc foo.c -o foo -lm
 
 
 
-## Variable Types
+## Variables
 
 | Section | Type     | Content               |
 | ------- | ----     | --------              |
@@ -76,7 +80,7 @@ gcc foo.c -o foo -lm
 
 
 
-## 'placeholders'
+## 'Placeholders'
 
 | Section | placeholder | role                           |
 | ------- | ----        | --------                       |
@@ -85,3 +89,65 @@ gcc foo.c -o foo -lm
 | 1       | %.2f        | only 2 decimals                |
 | 1       | %c          | replace character [1]          |
 | 2       | %lf         | for **doubles**                |
+
+
+## Math formulas
+
+
+| Section | To-do                                | Formula                       |
+| ---      | ---                                  | ---                           |
+| 2.1       | **n-th Term of Arithmetic Sequence** | `an = a1 + (n - 1) * d`       |
+| 2.2       | **Sum of Arithmetic Sequence**       | `Sn = (a1 + an) * n / 2`      |
+| 2.9       | **distance between 2 given points**  | `d = √ (x1-x2)^2 + (y1-y2)^2` |
+
+
+## Relational Operators
+
+| Section | Operator | Meaning                  | 
+| ---     | ---      | ---                      | 
+| 3       | >        | Greater than             |
+| 3       | >=       | Greater than or equal to |
+| 3       | <=       | Less than                |
+| 3       | <=       | Less than or equal to    |
+| 3       | ==       | 'left' equals to 'right' |
+| 3       | !=       | Not equals to            |
+
+> notice that `==` is a Relational Operator, while `=` won't be used to check any condition but rather an **Assignment Operator**
+
+
+
+## Logical Operators
+
+| Section | Operator | Symbol | Meaning              | 
+| ---     | ---      | ---    | ---                  | 
+| 3       | AND      | &&     | both operands true   |
+| 3       | OR       | \|\|   | either is true       |
+| 3       | NOT      | !      | reverses value       |
+
+### Truth Tables
+
+| Operand | Operator | Result |
+| ---     | ---      | ---    |
+| T       | NOT      | F      |
+| F       | NOT      | T      |
+
+
+| 1 condition | 2 condition | Operator | Result |
+| ---         | ---         | ---      | ---    |
+| T           | T           | AND      | T      |
+| T           | F           | AND      | F      |
+| F           | T           | AND      | F      |
+| F           | F           | AND      | F      |
+
+
+| 1 condition | 2 condition | Operator | Result |
+| ---         | ---         | ---      | ---    |
+| T           | T           | OR       | T      |
+| T           | F           | OR       | T      |
+| F           | T           | OR       | T      |
+| F           | F           | OR       | F      |
+
+# Snippetz
+
+- if statementz <!--course VS https://www.programiz.com/c-programming/c-if-else-statement-->
+- switch-casez
