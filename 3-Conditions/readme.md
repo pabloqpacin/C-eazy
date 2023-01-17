@@ -277,7 +277,7 @@ int main(){
 
 > fairly different than Vlad's
 
-### Conditions Assignment
+### Conditions Assignment (!)
 
 1. Write a program that reads from the user 2 values of an "integer" type. The program should print "EQUAL" if both the values are equal. Otherwise, the program should print "NOT EQUAL".
 
@@ -305,9 +305,29 @@ int main(){
 
 Note: There's more than just 1 "correct" solution for this question.
 
-```c
 
+```c
+#include <stdio.h>
+
+int main()
+{
+	int a, b, c;
+	printf("Enter the first value: ");
+	scanf("%d", &a);
+	printf("Enter the second value: ");
+	scanf("%d", &b);
+	printf("Enter the third value: ");
+	scanf("%d", &c);
+
+	if (a == b && b == c)
+		printf("EQUAL\n");
+	else
+		printf("NOT EQUAL\n");
+
+	return 0;
+}
 ```
+
 
 3. Write a program that reads from the user a "three-digit" integer value. The program should print "ASCENDING" if the three digits of the number are in ascending order (from left to right). If not, the program should print "NOT ASCENDING".
 
@@ -316,14 +336,50 @@ For example:
 -  Input: 143 --> NOT ASCENDING.
 
 ```c
+#include <stdio.h>
 
+int main(){
+
+    int number;
+    int units, tens, hundreds;
+    printf("Enter a 3-digit number: \n");
+    scanf("%d", &number);
+
+    units = number % 10;
+    tens = (number / 10) % 10;
+    hundreds = number / 100;
+
+    if (hundreds < tens && tens < units)
+        printf("ASCENDING! (%d < %d < %d) \n", hundreds, tens, units);
+    else
+        printf("NOT ASCENDING... \n");
+
+    return 0;
+}
 ```
+
 
 4. Write a program that reads an input number from the user. The program should print "1" if the value is positive, "-1" if it's negative, and "0" if it equals to zero.
 
 
 ```c
+#include <stdio.h>
 
+int main(){
+
+    int number;
+    printf("Enter your fave number: \n");
+    scanf("%d", &number);
+
+    if (number>0)
+        printf("1 \n");
+    else if (number<0)
+        printf("-1 \n");
+    else    // num == 0
+        printf("0 \n");
+
+    return 0;
+}
 ```
 
 ## Practicals #3

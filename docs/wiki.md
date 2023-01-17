@@ -124,7 +124,9 @@ gcc foo.c -o foo -lm
 | 3       | OR       | \|\|   | either is true       |
 | 3       | NOT      | !      | reverses value       |
 
-### Truth Tables
+
+<details>
+<summary>Truth Tables [AND OR NOT]</summary>
 
 | Operand | Operator | Result |
 | ---     | ---      | ---    |
@@ -147,7 +149,39 @@ gcc foo.c -o foo -lm
 | F           | T           | OR       | T      |
 | F           | F           | OR       | F      |
 
+</details>
+
 # Snippetz
+
+<details>
+<summary>breakdown number digitz</summary>
+
+```c
+#include <stdio.h>
+
+/* Section 3 - mind the 'num % 10' operations aye */
+
+int main()
+{
+	int num;
+	int units, tens, hundreds;
+	printf("Enter a 3-digit num: ");
+	scanf("%d", &num);
+
+	units = num % 10;
+	tens = (num / 10) % 10;
+	hundreds = num / 100;
+
+	if (hundreds < tens && tens < units)
+		printf("ASCENDING\n");
+	else 
+		printf("NOT ASCENDING\n");
+
+	return 0;
+}
+```
+</details>
 
 - if statementz <!--course VS https://www.programiz.com/c-programming/c-if-else-statement-->
 - switch-casez
+- 
