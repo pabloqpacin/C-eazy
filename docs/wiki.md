@@ -153,8 +153,35 @@ gcc foo.c -o foo -lm
 
 # Snippetz
 
+
 <details>
-<summary>breakdown number digitz</summary>
+<summary>S2 - secondz conversion</summary>
+
+```c
+#include <stdio.h>
+
+int main(){
+
+    int seconds;
+    int hours, minutes, remainingSeconds;
+
+    printf("Enter the total seconds: ");
+    scanf("%d", &seconds);
+
+    hours = seconds/3600;
+    minutes = (seconds - hours*3600) / 60;
+    remainingSeconds = (seconds - hours*3600) % 60;
+
+    printf("%.2d:%.2d:%.2d \n", hours, minutes, remainingSeconds);
+
+    return 0;
+}
+```
+
+</details>
+
+<details>
+<summary>S3 - breakdown number digitz</summary>
 
 ```c
 #include <stdio.h>
@@ -183,5 +210,6 @@ int main()
 </details>
 
 - if statementz <!--course VS https://www.programiz.com/c-programming/c-if-else-statement-->
+  - see [ChatGPT take](/3-Conditions/readme.md#chatgpt-on-if-statements) on **if-statements**
 - switch-casez
-- 
+
