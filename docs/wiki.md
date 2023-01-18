@@ -69,11 +69,12 @@ gcc foo.c -o foo -lm
 
 ## Variables
 
-| Section | Type     | Content               |
-| ------- | ----     | --------              |
-| 2       | int      | integers              |
-| 2       | double   | int + floating point  |
-| 2       | float    | floating point        |
+| Section | Type      | Content               |
+| ------- | ----      | --------              |
+| 2       | int       | integers              |
+| 2       | double    | int + floating point  |
+| 2       | float     | floating point        |
+| 3B      | character | character             |
 
 > see [documentation](/docs/documentation.md) on `double` vs `float`
 
@@ -82,13 +83,38 @@ gcc foo.c -o foo -lm
 
 ## 'Placeholders'
 
-| Section | placeholder | role                           |
-| ------- | ----        | --------                       |
-| 1       | %d          | replace integer                |
+| Section | placeholder | role                           | notes
+| ------- | ----        | --------                       | ---
+| 1       | %d          | replace integer                | may ASCII dec
 | 1       | %f          | replace floating point numbers |
 | 1       | %.2f        | only 2 decimals                |
-| 1       | %c          | replace character [1]          |
 | 2       | %lf         | for **doubles**                |
+| 3B      | %c          | replace character [1]          | ASCII value
+| 3B      | %X          | provide HEX                    | ASCII in hex
+
+
+<details>
+<summary>ASCI...</summary>
+
+```c
+#include <stdio.h>
+
+int main(){
+
+    char myChar1 = 'a';
+    printf("Select a character: ");
+    scanf("%c", &myChar1);
+        // what if we scan for %X or alike...
+
+    printf("- Character: %c \n", myChar1);
+    printf("- Decimal ASCII Code: %d \n", myChar1);
+    printf("- Hexadecimal ASCII Code: %X \n\n", myChar1);
+        // And the binary?
+
+    return 0;
+}
+```
+</details>
 
 
 ## Math formulas
@@ -150,6 +176,104 @@ gcc foo.c -o foo -lm
 | F           | F           | OR       | F      |
 
 </details>
+
+
+
+## Numeral Systems <!--(3.5)-->
+
+
+### Conversion Rules
+
+| Position | `weight = base^ position` |
+| ---      | ---                       |
+
+
+
+### Table 0-15: Dec Bin Oct Hex
+
+| Decimal [Base10] | Binary [Base2]  | Octal [Base8] | Hex [Base16] |
+| ---              | ---             | ---           | ---          |
+| 0                | 0               |               | 0            |
+| 1                | 1               |               | 1            |
+| 2                | 10              |               | 2            |
+| 3                | 11              |               | 3            |
+| 4                | 100             |               | 4            |
+| 5                | 101             |               | 5            |
+| 6                | 110             |               | 6            |
+| 7                | 111             |               | 7            |
+| 8                | 1000            |               | 8            |
+| 9                | 1001            |               | 9            |
+| 10               | 1010            |               | A            |
+| 11               | 1011            |               | B            |
+| 12               | 1100            |               | C            |
+| 13               | 1101            |               | D            |
+| 14               | 1110            |               | E            |
+| 15               | 1111            |               | F            |
+| 16               | 10000           |               | 10           |
+| ...              | ...             |               | ...          |
+| 26               | 11010           |               | 1A           |
+| 26               | 11010           |               | 1A           |
+
+> NOTE: in `0011`, the **first `0`s** are *leading zeroes*
+
+
+### Positions Weight — **BIN STRUCTURE...**
+
+| 0/1  | 0/1  | 0/1 | 0/1 | 0/1 | 0/1 | 0/1 | 0/1 | 0/1 |
+| ---  | ---  | --- | --- | --- | --- | --- | --- | --- |
+| k8   | k7   | k6  | k5  | k4  | k3  | k2  | k1  | k0  |
+| 256  | 128  | 64  | 32  | 16  | 8   | 4   | 2   | 1   |
+
+
+> - [ ] signed thing?
+
+
+### BIN Iteration Value [example: *700d*]
+
+| iteration | (remainder)       | value 
+| ---       | ---               | ---
+| k0        | 700 / 2 = 350 (0) | 1
+| k1        | 350 / 2 = 125 (0) | 2
+| k2        | 175 / 2 = 87 (1)  | 4
+| k3        | 87 / 2 = 43 (1)   | 8
+| k4        | 43 / 2 = 21 (1)   | 16
+| k5        | 21 / 2 = 10 (1)   | 32
+| k6        | 10 / 2 = 5 (0)    | 64
+| k7        | 5 / 2 = 2 (1)     | 128
+| k8        | 2 / 2 = 1 (0)     | 256
+| k9        | 1 / 2 = 0 (1)     | 512
+| k10       | 0 / 2 = 0 (0)     | 1024
+
+
+
+### HEX Iteration thing
+
+| iteration | power op | POWER
+| ---       | ---      | ---   
+| k0        | 16^0     | 1
+| k1        | 16^1     | 16
+| k2        | 16^2     | 256
+| k3        | 16^3     | 4096
+| k4        | 16^4     | 65,536
+| k5        | 16^5     | 1,048,576
+| k6        | 16^6     | 16,777,216
+| k7        | 16^7     | 268,435,456
+| k8        | 16^8     | 4,294,967,296
+| k9        | 16^9     | 68,719,476,736
+| k10       | 16^10    | 1,099,511,627,776
+
+
+
+
+
+## Other conventions
+
+| Section | Letter | Meaning             |
+| ---     | ---    | ---                 |
+| 3B      | `k`    | number of iteration |
+
+
+
 
 # Snippetz
 
