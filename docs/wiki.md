@@ -94,7 +94,7 @@ gcc foo.c -o foo -lm
 
 
 <details>
-<summary>ASCI...</summary>
+<summary>ASCII...</summary>
 
 ```c
 #include <stdio.h>
