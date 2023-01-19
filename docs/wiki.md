@@ -1,5 +1,26 @@
 # C wiki
 
+<details>
+<summary>Table of Contents</summary>
+
+- [C wiki](#c-wiki)
+  - [Headers .h](#headers-h)
+  - [Functions - Commands](#functions---commands)
+  - [Variables](#variables)
+  - [Format Specifiers](#format-specifiers)
+  - [Math formulas](#math-formulas)
+  - [Operators](#operators)
+    - [Relational Operators](#relational-operators)
+    - [Logical Operators](#logical-operators)
+    - [Assignment Operators ( + Arithmetic)](#assignment-operators---arithmetic)
+  - [Numeral Systems ](#numeral-systems-)
+    - [BIN: Position Value (`k`=0/1)](#bin-position-value-k01)
+    - [DEC to BIN to DEC Conversion example](#dec-to-bin-to-dec-conversion-example)
+    - [BIN \& HEX Position Value ](#bin--hex-position-value-)
+  - [Other conventions](#other-conventions)
+- [Snippetz](#snippetz)
+
+</details>
 
 ## Headers .h
 
@@ -81,7 +102,7 @@ gcc foo.c -o foo -lm
 
 
 
-## 'Placeholders'
+## Format Specifiers
 
 | Section | placeholder | role                           | notes
 | ------- | ----        | --------                       | ---
@@ -126,8 +147,13 @@ int main(){
 | 2.2       | **Sum of Arithmetic Sequence**       | `Sn = (a1 + an) * n / 2`      |
 | 2.9       | **distance between 2 given points**  | `d = √ (x1-x2)^2 + (y1-y2)^2` |
 
+## Operators
 
-## Relational Operators
+> extra documentation:
+- [x] @Programiz: [C Programming Operators](https://www.programiz.com/c-programming/c-operators)
+- [ ] @Programiz: [Bitwise Operators in C Programming](https://www.programiz.com/c-programming/bitwise-operators)
+
+### Relational Operators
 
 | Section | Operator | Meaning                  | 
 | ---     | ---      | ---                      | 
@@ -142,7 +168,7 @@ int main(){
 
 
 
-## Logical Operators
+### Logical Operators
 
 | Section | Operator | Symbol | Meaning              | 
 | ---     | ---      | ---    | ---                  | 
@@ -177,58 +203,89 @@ int main(){
 
 </details>
 
+### Assignment Operators ( + Arithmetic)
+
+| Section | Operator     | Meaning        |
+| ---     | ---          | ---            |
+| 1       |  `+`         |                | 
+| 1       |  `-`         |                | 
+| 4       | foo `+=` bar | foo=foo+bar    | 
+| 4       | foo `-=` bar | foo=foo-bar    | 
+| 4       | foo`++`      | foo=foo+1      |
+| 4       | foo`--`      | foo=foo-1      | 
+
+> extensive to `*`, `/` and `%`; see documentation above
+
+
 
 
 ## Numeral Systems <!--(3.5)-->
 
 
-### Conversion Rules
+<details>
+<summary>0-16: DEC BIN OCT HEX</summary>
 
-| Position | `weight = base^ position` |
-| ---      | ---                       |
+| DEC | BIN   | OCT | HEX |
+| --- | ---   | --- | --- |
+| 0   | 0     | 0    | 0   |
+| 1   | 1     | 1    | 1   |
+| 2   | 10    | 2    | 2   |
+| 3   | 11    | 3    | 3   |
+| 4   | 100   | 4    | 4   |
+| 5   | 101   | 5    | 5   |
+| 6   | 110   | 6    | 6   |
+| 7   | 111   | 7    | 7   |
+| 8   | 1000  | 10    | 8   |
+| 9   | 1001  | 11    | 9   |
+| 10  | 1010  | 12    | A   |
+| 11  | 1011  | 13    | B   |
+| 12  | 1100  | 14    | C   |
+| 13  | 1101  | 15    | D   |
+| 14  | 1110  | 16    | E   |
+| 15  | 1111  | 17    | F   |
+| 16  | 10000 | 20    | 10  |
+| ... | ...   | ...   | ... |
+| 26  | 11010 | 32    | 1A  |
 
+> BIN 011.010 = 32 OCT
+> 
+> BIN: 0001.1010 = 1A HEX
 
-
-### Table 0-15: Dec Bin Oct Hex
-
-| Decimal [Base10] | Binary [Base2]  | Octal [Base8] | Hex [Base16] |
-| ---              | ---             | ---           | ---          |
-| 0                | 0               |               | 0            |
-| 1                | 1               |               | 1            |
-| 2                | 10              |               | 2            |
-| 3                | 11              |               | 3            |
-| 4                | 100             |               | 4            |
-| 5                | 101             |               | 5            |
-| 6                | 110             |               | 6            |
-| 7                | 111             |               | 7            |
-| 8                | 1000            |               | 8            |
-| 9                | 1001            |               | 9            |
-| 10               | 1010            |               | A            |
-| 11               | 1011            |               | B            |
-| 12               | 1100            |               | C            |
-| 13               | 1101            |               | D            |
-| 14               | 1110            |               | E            |
-| 15               | 1111            |               | F            |
-| 16               | 10000           |               | 10           |
-| ...              | ...             |               | ...          |
-| 26               | 11010           |               | 1A           |
-| 26               | 11010           |               | 1A           |
-
-> NOTE: in `0011`, the **first `0`s** are *leading zeroes*
+</details>
 
 
-### Positions Weight — **BIN STRUCTURE...**
+> NOTE: in `0011`, the **first `0`s** are *'leading zeroes'*
+>
 
-| 0/1  | 0/1  | 0/1 | 0/1 | 0/1 | 0/1 | 0/1 | 0/1 | 0/1 |
-| ---  | ---  | --- | --- | --- | --- | --- | --- | --- |
+| CONVERTION ARITHMETICS |`digit value = base^position` |
+| --- | --- |
+
+
+### BIN: Position Value (`k`=0/1)
+
 | k8   | k7   | k6  | k5  | k4  | k3  | k2  | k1  | k0  |
+| ---  | ---  | --- | --- | --- | --- | --- | --- | --- |
 | 256  | 128  | 64  | 32  | 16  | 8   | 4   | 2   | 1   |
 
+<!-- > - [ ] signed thing? -->
 
-> - [ ] signed thing?
 
 
-### BIN Iteration Value [example: *700d*]
+### DEC to BIN to DEC Conversion example
+
+| DEC | BIN            |
+| --- | ---            |
+| 700 | 10-1110-1001 |
+
+| 1   | 0       | 1   | 1   | 1   | 0       | 1   | 0       | 0     | 1   |
+| --- | ---     | --- | --- | --- | ---     | --- | ---     | ---   | --- |
+| 512 | ~~256~~ | 128 | 64  | 32  | ~~16~~  | 8   | ~~4~~   | ~~2~~ | 1   |
+
+<details>
+<summary>operations</summary>
+
+> 233 = 128 + 64 [192] + 32 [224] + 0 (~~16 [240]~~) + 8 [232] + 0 + 1 [233]
+
 
 | iteration | (remainder)       | value 
 | ---       | ---               | ---
@@ -243,24 +300,25 @@ int main(){
 | k8        | 2 / 2 = 1 (0)     | 256
 | k9        | 1 / 2 = 0 (1)     | 512
 | k10       | 0 / 2 = 0 (0)     | 1024
+| k11       | 0 / 2 = 0 (0)     | 2048
 
+</details>
 
+### BIN & HEX Position Value <!--weight-->
 
-### HEX Iteration thing
-
-| iteration | power op | POWER
-| ---       | ---      | ---   
-| k0        | 16^0     | 1
-| k1        | 16^1     | 16
-| k2        | 16^2     | 256
-| k3        | 16^3     | 4096
-| k4        | 16^4     | 65,536
-| k5        | 16^5     | 1,048,576
-| k6        | 16^6     | 16,777,216
-| k7        | 16^7     | 268,435,456
-| k8        | 16^8     | 4,294,967,296
-| k9        | 16^9     | 68,719,476,736
-| k10       | 16^10    | 1,099,511,627,776
+| iteration | BIN power     | HEX power
+| ---       | ---           | ---   
+| k0        | 2^0 = 1       |  16^0 = 1
+| k1        | 2^1 = 2       |  16^1 = 16
+| k2        | 2^2 = 4       |  16^2 = 256
+| k3        | 2^3 = 8       |  16^3 = 4096
+| k4        | 2^4 = 16      |  16^4 = 65,536
+| k5        | 2^5 = 32      |  16^5 = 1,048,576
+| k6        | 2^6 = 64      |  16^6 = 16,777,216
+| k7        | 2^7 = 128     |  16^7 = 268,435,456
+| k8        | **2^8 = 256** |  16^8 = 4,294,967,296
+| k9        | 2^9 = 512     |  16^9 = 68,719,476,736
+| k10       | 2^10 = 1024   |  16^10 = 1,099,511,627,776
 
 
 
@@ -336,4 +394,4 @@ int main()
 - if statementz <!--course VS https://www.programiz.com/c-programming/c-if-else-statement-->
   - see [ChatGPT take](/3-Conditions/readme.md#chatgpt-on-if-statements) on **if-statements**
 - switch-casez
-
+- loopz
