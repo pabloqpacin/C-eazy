@@ -1,5 +1,7 @@
 # 4. Loops - For, While and Do-While
 
+> skip to [practicals #4](#practicals-4)
+
 ## Introduction
 
 - iterations VS scripted sequence
@@ -409,6 +411,727 @@ int main()
 
 ### Challenge #6a - Print Right Angle Triangle Pattern [1/2]
 
+- todo
+  - receive integer "n"
+  - print right angle triangle —as shown below—
+
+```markdown
+n=3
+1
+12
+123
+```
+
+```c
+#include <stdio.h>
+
+int main(){
+
+    int i, j;
+    int n;
+
+    printf("Enter a number: ");
+    scanf("%d", &n);
+
+    for (i=1; i<=n; i++){
+        for(j=1; j<=i; j++)
+            printf("%d", j);
+        printf("\n");
+    }
+
+    return 0;
+}
+```
+
+<!--
+#### prototype 1
+
+```c
+#include <stdio.h>
+
+int main(){
+
+    int n;
+    int i, pattern;
+    
+    printf("Enter a number: ");
+    scanf("%d", &n);
+
+    for (i=1, pattern=1; i < n; i++, pattern+=(i*10)+1 ){
+        printf("%d \n", pattern);
+    }
+
+
+    return 0;
+}
+```
+-->
+
 ### Challenge #6b - Print Right Angle Triangle Pattern [2/2]
 
-### Milestone #2 - 10 Cents Million Dollars!!
+- todo
+  - receive integer n
+  - print triangle like:
+
+```markdown
+n=3
+1
+22
+333
+```
+
+```c
+#include <stdio.h>
+
+int main(){
+
+    int i, j;
+    int n;
+
+    printf("Enter a number: ");
+    scanf("%d", &n);
+
+    for (i=1; i<=n; i++){
+        for(j=1; j<=i; j++)
+            printf("%d", i);
+        printf("\n");
+    }
+
+    return 0;
+}
+```
+
+
+### Milestone #2 - 1 Cent VS 1 Million Dollars!!
+
+```c
+/* 
+    Milestone #2 - 1 Cent VS 1 Million Dollars!!
+
+    What is better?
+    a) 1 Million dollars, right now
+    b) 1 cent, doubles every day for 30 days
+
+*/
+
+#include <stdio.h>
+
+int main(){
+
+    int i;
+    double total=0.01;
+
+    for (i=1;i<=30;i++){
+        printf("Day %.2d = %.2lf $ \n", i, total);
+        total*=2;
+    }
+
+    return 0;
+}
+```
+
+
+<!-- PROTOTYPE
+```c
+#include <stdio.h>
+
+int main(){
+
+    int total=1, i;
+
+    for (i=1;i<=30;i++){
+        printf("Day %.2d = %.2lf $ \n", i, (double)total/100);
+        total*=2;
+    }
+
+    return 0;
+}
+```
+-->
+
+
+## Practicals #4
+
+### 1. Print from 1 to num and viceversa
+
+- todo
+  - receive "num" from user
+  - print all integers from 1 to "num" and viceversa
+
+```c
+#include <stdio.h>
+
+int main(){
+
+    int num;
+    int i;
+
+    printf("Enter a number: ");
+    scanf("%d", &num);
+
+    for (i=1; i<=num; i++)
+        printf("%d ", i);
+    printf("\n");
+
+    for (i=num; i>=1; i--)
+        printf("%d ", i);
+    printf("\n");
+
+    return 0;
+}
+```
+
+### 2. Print the sum of all numbers from 1 to num
+
+- todo
+  - receive "num" from user
+  - print the SUM of all integers from 1 to "num"
+
+```c
+#include <stdio.h>
+
+int main(){
+
+    int num, sum;   // int temp not to lose num in while loop
+    int i;
+
+    printf("Enter a number: ");
+    scanf("%d", &num);
+
+    // Arithmetic Formula
+    // sum = (1+num) * num / 2;
+
+    // while (num>=1){
+        // sum+=num;
+        // num--;
+    // }
+
+    for (i=1;i<=num;i++)
+        sum+=i;
+    
+    printf("Sum dawg: %d \n", sum);
+
+    return 0;
+}
+```
+
+### 3. Print the Multiplication Table of a number
+
+- todo
+  - receive num & limit
+  - print multiplication table UNTIL limit
+
+
+```c
+#include <stdio.h>
+
+int main(){
+
+    int num, limit;
+    int i;
+
+    printf("Enter number: ");
+    scanf("%d", &num);
+    printf("Enter limit: ");
+    scanf("%d", &limit);
+
+    for (i=1;i<=limit;i++)
+        printf("%d x %d = %d \n", num, i, (num*i));
+
+    return 0;
+}
+```
+
+### 4. Print n even natural numbers
+
+- todo
+  - receive num
+  - print num times even numbers
+
+```c
+#include <stdio.h>
+
+int main(){
+
+    int num;
+    int i;
+
+    printf("Enter number: ");
+    scanf("%d", &num);
+
+    for (i=1;i<=num;i++)
+        printf("%d ", i*2);
+
+    printf("\n");
+    return 0;
+}
+```
+
+### 5. Print Pyramid Numbers Pattern
+
+- todo
+  - receive integer "n"
+  - print pyramid with following pattern
+
+```markdown
+n=3
+  1  
+ 3 2
+4 5 6
+```
+
+```c
+#include <stdio.h>
+
+int main(){
+
+    int n;
+    int i, j, k;
+    int blankSpaces;
+    int currentValue=1;
+
+    printf("Enter 'n' (number of rows in pyramid): ");
+    scanf("%d", &n);
+
+    blankSpaces=n-1;
+   
+    // Iterate over all of the rows
+    for (i=1;i<=n;i++){
+        
+        // Add row spacez
+        for (k=blankSpaces; k>=1; k--)
+            printf(" ");
+
+        // Add row numberz
+        for (j=1;j<=i;j++){
+            printf("%d ", currentValue);
+            currentValue++;
+        }
+        
+        // Change rowz
+        printf("\n");
+        blankSpaces--;
+
+    }
+    return 0;
+}
+
+/* in row 5 and beyond, should have one less num printed dawg */
+```
+
+### 6. Print Sum of Values Divisible by 3 AND 5
+
+- todo 
+  - efficient program receive "num" from user
+  - print the SUM of all numbers from "1" to "num" that can be divided by 3 AND by 5
+
+
+```c
+#include <stdio.h>
+
+int main(){
+
+    int num, sum;
+    int i;
+
+    printf("Enter your number: ");
+    scanf("%d", &num);
+
+    /* Trivial
+    for (i=1;i<=num;i++){
+        if (i%3==0 && i%5==0){
+            sum+=i;
+            printf("i%d:Sum%d ", i, sum);   // control-print
+        }
+    }
+    */
+
+   // Efficient
+    for (i=15;i<=num;i+=15)
+        sum+=i;
+
+    printf("\n SUM = %d \n", sum);
+
+    return 0;
+}
+```
+
+> "Efficient" = few iterations!
+
+
+### 7. Print Sum of Values Divisible by 3 OR 5
+
+
+```c
+#include <stdio.h>
+
+int main(){
+
+    int num, sum;
+    int i;
+
+    printf("Enter your number: ");
+    scanf("%d", &num);
+
+    /* Trivial
+    for (i=1;i<=num;i++){
+        if (i%3==0 || i%5==0)
+            sum+=i;
+        printf("%d ", sum);     // control-print
+    }
+    */
+
+    // Efficient
+    for (i=3; i<=num; i+=3)
+        sum+=i;
+
+    for (i=5; i<=num; i+=5){
+        if (i%3!=0)
+        sum+=i;
+    }
+
+    printf("\nSUM = %d \n", sum);
+
+    return 0;
+}
+```
+
+### 8. Very Ascending or Not
+
+- todo
+  - receive "size" value from user
+  - read sequence of "numbers" (sequence lenght = "size")
+  - determine whether numbers in sequence are "Very Ascending"
+  - example: size=7: 1,9,14,15,18,21,26: Very Ascending
+  - example: size=3: 2,1,10: NOT Very Ascending
+
+
+```c
+/*
+    j = last num
+    k = new num
+    if at any time k > j, veryAscending will equal 0
+*/
+
+#include <stdio.h>
+
+int main(){
+
+    int size;
+    int i, j=1, k;
+    int VeryAscending=1;
+    // char VeryAscending='T';
+    
+    printf("Enter 'size' of sequence: ");
+    scanf("%d", &size);
+
+    if (size<=0)
+        printf("Please, try again.\n");
+        
+    else{
+
+        printf("Enter sequence: ");
+
+        for (i=1; i<=size; i++){
+            j=k;
+            scanf("%d", &k);
+            if (k<=j)
+            VeryAscending=0;
+            //VeryAscending='F';
+        }
+
+        // printf("Very ascending [T/F]: %c \n", VeryAscending);
+        if (VeryAscending)
+            printf("Very Ascending sequence \n");
+        else
+            printf("NOT Very Ascending! \n");
+
+    }
+
+    return 0;
+}
+```
+
+<details>
+<summary>@Vlad's</summary>
+
+```c
+/*
+    j = last value
+    k = current value
+*/
+
+#include <stdio.h>
+
+int main(){
+
+    int size;
+    int j, k;
+    int OK=1;
+
+    do {
+        printf("Enter sequence size (must be greater than 0): ");
+        scanf("%d", &size);
+    } while (size<=0);
+
+
+    do {
+        printf("Insert value: ");
+        scanf("%d", &k);
+        if (k<0)
+            printf("Number must be positive! \n");
+        else{
+            if (k<=j){
+                OK=0;
+                break;
+            }
+            j=k;
+            size--;
+        }
+    } while (size>0);
+
+    if (OK)
+        printf("Very Ascending sequence \n");
+    else
+        printf("NOT Very Ascending! \n");
+
+    return 0;
+}
+```
+
+</details>
+
+
+> (only positive values in this case)
+>
+> notice:
+> - **safety-guard** if-statement
+> - @Vlad's **safety-guard** do-while loop!!
+> - @Vlad's **break** do-while loop within if-statement
+
+
+<!-- LAST PROTOTYPE
+```C
+/*
+    j = last num
+    k = new num
+    if at any time k > j, veryAscending will equal 0
+*/
+
+#include <stdio.h>
+
+int main(){
+
+    int size;
+    int i, j=1, k;
+    int VeryAscending=1;
+    // char VeryAscending='T';
+
+    do{
+    printf("Enter 'size' of sequence: ");
+    scanf("%d", &size);
+        if (size<=1)
+            printf("Please, try again.\n");
+    } while (size<=1);
+
+
+    // printf("Enter 'size' of sequence: ");
+    // scanf("%d", &size);
+
+    // if (size<=0)
+    //     printf("Please, try again.\n");
+        
+    // else{
+
+        printf("Enter sequence: ");
+
+        for (i=1; i<=size; i++){
+            j=k;
+            scanf("%d", &k);
+            if (k<=j)
+            VeryAscending=0;
+            //VeryAscending='F';
+        }
+
+        // printf("Very ascending [T/F]: %c \n", VeryAscending);
+        if (VeryAscending)
+            printf("Very Ascending sequence \n");
+        else
+            printf("NOT Very Ascending! \n");
+
+    // }
+
+    return 0;
+}
+```
+-->
+
+
+### *9*. Subtracting EvenDigitSum and OddDigitSum
+
+- todo
+  - receive num; mind digits
+  - find difference between (a) sum of all even digits and (b) sum of all odd numbers
+
+```c
+#include <stdio.h>
+
+int main(){
+
+    int num;
+    int evenSum, oddSum;
+    int digit;
+
+    printf("Enter num: ");
+    scanf("%d", &num);
+
+    while (num>0){
+        digit=num%10;
+        if (digit%2==0)
+            evenSum+=digit;
+        else
+            oddSum+=digit;
+        num/=10;
+    }
+
+    printf("EVEN minus ODD digits = %d \n", evenSum-oddSum);
+
+    return 0;
+}
+```
+
+
+<!--
+#### prototype 2
+
+```c
+#include <stdio.h>
+
+int main(){
+
+    int num=124, evenSum, oddSum;
+    int i, digit, tempNum;
+
+    /* // let's start with fixed num=12
+    printf("Enter your number: ");
+    scanf("%d", &num);
+    */
+
+
+    for (tempNum=num;tempNum>=1;tempNum/10){
+        digit=tempNum%10;
+        printf("%d ", digit);
+
+
+        if (digit%2==0)
+            evenSum+=digit;
+        else if (digit%2!=0)
+            oddSum+=digit;
+        else
+            printf("Bugz \n");
+    }
+
+
+    printf("DIFF = %d \n", evenSum-oddSum);
+
+
+
+
+/*
+    do{
+        
+        tempNum/10;
+    } while (tempNum/10>10);
+    
+
+    /*  PROTOTYPE 1
+    for (tempNum=num;tempNum/10>10;tempNum/10){
+        digit=tempNum;
+        printf("%d", tempNum);
+        printf("%d", digit);
+        if (digit%2==0)
+            evenSum+=digit;
+        else if (digit%2!=0)
+            oddSum+=digit;
+        else
+            printf("Bugz \n");
+    }
+    */
+
+
+    return 0;
+}
+```
+
+#### protoype 1
+
+```c
+#include <stdio.h>
+
+int main(){
+
+    int num=124, evenSum, oddSum;
+    int i, digit, tempNum;
+
+    /* // let's start with fixed num=12
+    printf("Enter your number: ");
+    scanf("%d", &num);
+    */
+
+    /*
+    tempNum=num;
+    do{
+        tempNum/10
+    } while (tempNum/10>10)
+    */
+
+    for (tempNum=num;tempNum/10>10;tempNum/10){
+        digit=tempNum;
+        printf("%d", tempNum);
+        printf("%d", digit);
+        if (digit%2==0)
+            evenSum+=digit;
+        else if (digit%2!=0)
+            oddSum+=digit;
+        else
+            printf("Bugz \n");
+    }
+
+    printf("DIFF = %d \n", evenSum-oddSum);
+    printf("digit = %d \n", digit);
+
+    return 0;
+}
+```
+-->
+
+### *10*. Sum of Odd Numbers Sequence
+
+- todo
+  - receive "n" number from user
+  - receive "n" integers
+  - printf sum of all ODD given numbers 
+
+```c
+#include <stdio.h>
+
+int main(){
+
+    int n;
+    int num, oddSum;
+    int i;
+
+    printf("Enter the 'n' number of integers: ");
+    scanf("%d", &n);
+
+    for (i=1;i<=n;i++){
+        printf("Enter integer n.%d: ", i);
+        scanf("%d", &num);
+        if (num%2!=0)
+            oddSum+=num;
+    }
+
+    printf("Sum of ODD numbers provided: %d \n", oddSum);
+    return 0;
+}
+```
