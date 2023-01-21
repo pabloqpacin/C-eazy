@@ -1,6 +1,7 @@
 {
     "recommendations": [
         "adpyke.codesnap",
-        "bierner.markdown-footnotes"
+        "bierner.markdown-footnotes",
+        "platformio.platformio-ide"
     ]
 }

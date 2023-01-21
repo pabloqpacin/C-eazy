@@ -147,6 +147,7 @@ int main(){
 | 2.2     | **Sum of Arithmetic Sequence**       | `Sn = (a1 + an) * n / 2`      |
 | 2.9     | **distance between 2 given points**  | `d = √ (x1-x2)^2 + (y1-y2)^2` |
 | 5       | **Factorial of n**                   | `F(n)=1*2*3*...*n`            |
+| 5.7     | **Derivatives**                      | `(c*x^n) = n*c*x^(n-1)`       |
 
 ## Operators
 
