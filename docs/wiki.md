@@ -142,10 +142,11 @@ int main(){
 
 
 | Section | To-do                                | Formula                       |
-| ---      | ---                                  | ---                           |
-| 2.1       | **n-th Term of Arithmetic Sequence** | `an = a1 + (n - 1) * d`       |
-| 2.2       | **Sum of Arithmetic Sequence**       | `Sn = (a1 + an) * n / 2`      |
-| 2.9       | **distance between 2 given points**  | `d = √ (x1-x2)^2 + (y1-y2)^2` |
+| ---     | ---                                  | ---                           |
+| 2.1     | **n-th Term of Arithmetic Sequence** | `an = a1 + (n - 1) * d`       |
+| 2.2     | **Sum of Arithmetic Sequence**       | `Sn = (a1 + an) * n / 2`      |
+| 2.9     | **distance between 2 given points**  | `d = √ (x1-x2)^2 + (y1-y2)^2` |
+| 5       | **Factorial of n**                   | `F(n)=1*2*3*...*n`            |
 
 ## Operators
 
