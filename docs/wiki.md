@@ -112,6 +112,9 @@ gcc foo.c -o foo -lm
 | 2       | %lf         | for **doubles**                |
 | 3B      | %c          | replace character [1]          | ASCII value
 | 3B      | %X          | provide HEX                    | ASCII in hex
+| 6       | %lu         | memory address (decimal)       | ...
+| 6B      | %p          | memory address (hex)           | ... // `printf("%p", &a);`
+
 
 
 <details>
@@ -154,6 +157,7 @@ int main(){
 > extra documentation:
 - [x] @Programiz: [C Programming Operators](https://www.programiz.com/c-programming/c-operators)
 - [ ] @Programiz: [Bitwise Operators in C Programming](https://www.programiz.com/c-programming/bitwise-operators)
+- [ ] GeeksForGeeks: [Operators in C](https://www.geeksforgeeks.org/operators-in-c/)
 
 ### Relational Operators
 
