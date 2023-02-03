@@ -33,6 +33,7 @@
 | 1       | <stdio.h>  | standard input/output |                        |
 | x       | <stdlib.h> | -                     |                        |
 | 2       | <math.h>   | math functions        | `gcc foo.c -o foo -lm` |
+| 7       | <string.h> | working with strings
 
 > notably he won't discuss `<stdlib.h>`
 
@@ -77,13 +78,19 @@ gcc foo.c -o foo -lm
 
 ## Functions - Commands
 
-| Section | Function | functionality          |
-| ------- | ----     | --------               |
-| 1       | printf() | print to screen        |
-| ...     | puts()   | ...                    |
-| 2       | scanf()  | read user input        |
-| 2.9     | pow(x,y) | elevates to the power  |
-| 2.9     | sqrt()   | calculates square root |
+| Section | Function          | functionality          | notes |
+| ------- | ----              | --------               | ---   |
+| 1       | printf()          | print to screen        |
+| ...     | puts()            | print string           |
+| 2       | scanf()           | read user input        |
+| 2.9     | pow(x,y)          | elevates to the power  |
+| 2.9     | sqrt()            | calculates square root |
+| 7       | ~~[gets()](https://stackoverflow.com/questions/1694036/why-is-the-gets-function-so-dangerous-that-it-should-not-be-used)~~   | `scanf` for strings, dangerous! |
+| 7       | [fgets()](https://www.tutorialspoint.com/c_standard_library/c_function_fgets.htm)   | `scanf` for strings |
+| 7       | strlen(str)       | finding the lenth      | `<string.h>`
+| 7       | strcpy(dest,src)  | copying content        | `<string.h>`
+| 7       | strcat(dest,src)  | concatenating          | `<string.h>`
+| 7       | strcmp(str1,str2) | comparing as per ASCII | `<string.h>`
 
 
 
@@ -112,8 +119,9 @@ gcc foo.c -o foo -lm
 | 2       | %lf         | for **doubles**                |
 | 3B      | %c          | replace character [1]          | ASCII value
 | 3B      | %X          | provide HEX                    | ASCII in hex
-| 6       | %lu         | memory address (decimal)       | ...
+| 6       | %lu         | memory address (decimal)       | **'long unsigned int'**
 | 6B      | %p          | memory address (hex)           | ... // `printf("%p", &a);`
+| 7       | %s          | strings                        | last char = default `\0` 
 
 
 
