@@ -10,7 +10,8 @@
                 "${file}",
                 "-o",
                 "${fileDirname}/${fileBasenameNoExtension}",
-                "-lm"
+                "-lm",  // src: https://stackoverflow.com/questions/10409032/why-am-i-getting-undefined-reference-to-sqrt-error-even-though-i-include-math
+                "-ftime-report" // src: https://stackoverflow.com/questions/3025443/how-to-calculate-gcc-compilation-time
             ],
             "options": {
                 "cwd": "${fileDirname}"
