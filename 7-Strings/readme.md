@@ -462,9 +462,135 @@ int main() {
 
 ### Milestone # 1 - PALINDROME MILESTONE!
 
+- todo
+  - read string from user
+  - check if string is palindrome <!--either Even or Odd-->
+  - example
+    - string: n-o-o-n-\0
+    - index(n): 0-1-2-3-4
+
+```c
+#include <stdio.h>
+#include <string.h>
+#define SIZE 100
+
+
+int main(){
+
+    char str[SIZE];
+    int isPalindrome=1;
+    int i, j;
+
+    puts("Enter your string dawg: ");
+    fgets(str, SIZE, stdin);
+        printf("String = %s", str);
+
+    j = strlen(str)-2;
+    printf("strlen before NULL = %lu (j=%d) \n", strlen(str)-2, j);
+
+    for (i=0; i<=strlen(str)-2;i++){
+        printf("  i=%d - str[i]=%c \n", i, str[i]);
+        printf("  j=%d - str[j]=%c \n", j, str[j]);
+        if (str[i] != str[j]){
+            isPalindrome=0;
+            break;
+        }
+        j--;
+    }
+
+    if (isPalindrome)
+        puts("String is Palindrome!");
+    else
+        puts("String is NOT Palindrome");
+
+    return 0;
+}
+```
+> Mind: spaces/symmetry (eg. 'dabale arroz a la zorra el abad')
+
+
 ## Practicals #7
 
+<details>
+<summary>Custom 'string.h' functions</summary>
+
 ### Chall. #1 - Implement `strlen`
+
+```c
+#include <stdio.h>
+// #include <string.h>
+
+int funstrlen(char *str){
+    int i;
+    while (str[i] != '\0')
+        i++;
+    return i;
+}
+
+int main(){
+    char str[20] = "Hola!";
+    printf("Length of string '%s' = %d \n", str, funstrlen(str));
+    return 0;
+}
+```
+
 ### Chall. #2 - Implement `strcpy`
+
+```c
+#include <stdio.h>
+// #include <string.h>
+
+char *funstrcpy(char *dest, char *src){
+    int i;
+    while (src[i] != '\0'){
+        dest[i] = src[i];
+        i++;
+    }
+    return dest;
+}
+
+int main(){
+    char str[20] = "Hola!";
+    char strCopy[20];
+    printf("Src = '%s'; dest = '%s' \n", str, funstrcpy(strCopy, str));
+    return 0;
+}
+```
+
 ### Chall. #3 - Implement `strcmp`
 
+```c
+#include <stdio.h>
+// #include <string.h>
+
+int funstrcmp(char *str1, char *str2){
+
+    int i=0, flag=0;
+
+    while (flag==0){
+        if (str1[i] < str2[i])
+            flag=-1;
+        else if (str1[i] > str2[i])
+            flag=1;
+        if (str1[i] == '\0')
+            break;
+        i++;
+    }
+    return flag;
+}
+
+int main(){
+    char str1[] = "Pablo";
+    char str2[] = "Nuria";
+
+    if (funstrcmp(str1, str2)<0)
+        puts("Str1 is smaller");
+    else if (funstrcmp(str1, str2)>0)
+        puts("Str1 is greater");
+    else puts("buggey");
+
+    return 0;
+}
+```
+
+</details>
