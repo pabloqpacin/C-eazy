@@ -25,6 +25,20 @@
       - [Example 02](#example-02)
     - [Additional Explanations and Examples (Pointers, Arrays...)](#additional-explanations-and-examples-pointers-arrays)
   - [9.3 Constants](#93-constants)
+    - [Constants VS Variables](#constants-vs-variables)
+    - [Syntax and usage of Constants](#syntax-and-usage-of-constants)
+    - [Exclusive TIPS](#exclusive-tips)
+    - [3 main reasons for using constants](#3-main-reasons-for-using-constants)
+  - [9.4 Counting Arrays](#94-counting-arrays)
+    - [Intro - Counting with Separated Counter Variables](#intro---counting-with-separated-counter-variables)
+    - [Working with Counter Arrays](#working-with-counter-arrays)
+    - [Basic Exercise #1 - Set 0-5](#basic-exercise-1---set-0-5)
+    - [Basic Exercise #2 - Find Max Appearances (Set 0-9)](#basic-exercise-2---find-max-appearances-set-0-9)
+    - [Moving forward with the Mapping](#moving-forward-with-the-mapping)
+    - [Basic Exercise #3 - Find Max Appearances (Set 5-10)](#basic-exercise-3---find-max-appearances-set-5-10)
+    - [Chall. #1 - Finding the lowercase letter that appears the most](#chall-1---finding-the-lowercase-letter-that-appears-the-most)
+    - [Chall. #2 - Finding the uppercase letter that appears the most](#chall-2---finding-the-uppercase-letter-that-appears-the-most)
+    - [Chall. #3 - Finding the letter that appears the most](#chall-3---finding-the-letter-that-appears-the-most)
 
 </details>
 
@@ -840,5 +854,137 @@ int main(){
 }
 ```
 
+</details>
 
 ## 9.3 Constants
+
+<details>
+<summary>Details</summary>
+
+### Constants VS Variables
+
+- Variables (`int`, `float`, `char`...) may change over time
+- Constants DON'T!
+
+### Syntax and usage of Constants
+
+```c
+// Add 'const' to the var declaration
+const int year = 2000;
+```
+
+<!-- - Any attempt to change the value of `const` will lead to Compilation Error! -->
+
+### Exclusive TIPS
+
+1. "Default" usage of constants in C Language
+
+```c
+// Datatype 'int' is ASSUMED
+const age = 35;
+```
+
+2. A pointer to a constant! == `const int *ptr;`
+   - Value we're pointing to CAN'T BE CHANGED.
+   - Pointer itself CAN BE CHANGED.
+
+
+3. Constant pointer to var == `int *const ptr;`
+   -  Value we're pointing to CAN BE CHANGED
+   -  Pointer itself CAN'T BE CHANGED
+
+
+```c
+#include <stdio.h>
+
+int main(){
+
+    // Create constant vars
+    const int age1 = 20;
+    const int age2 = 25;
+
+    // Create constant pointer that points to var 'age1'
+    int *const ptr1 = &age1;
+    printf("var1=%d var2=%d\n", age1, age2);
+    
+
+    // Modify var 'age1' value, not the actual pointer!
+    *ptr1 = 30;
+    printf("var1=%d var2=%d\n", age1, age2);
+    
+
+    // // To-fail attempt to change the pointer itself
+    // ptr = &age2;
+
+    printf("var1=%d var2=%d\n", age1, age2);
+}
+```
+
+<!--
+```c
+#include <stdio.h>
+
+
+int main(){
+
+    // Create vars n1, n2 + constant vars n3, n4
+    int n1 = 10;
+    int n2 = 15;
+    const int n3 = 20;
+    const int n4 = 25;
+    printf("Vars = %d %d %d %d\n", n1, n2, n3, n4);
+
+    // Create pointers and constant pointers!
+    const int *ptr1 = &n1;
+    int *const ptr2 = &n2;
+    const int *ptr3 = &n3;
+    int *const ptr4 = &n4;  // Compiler Warning: initialization discards 'constant' qualifier from pointer target type 
+    printf("Ptrs = %d %d %d %d\n", *ptr1, *ptr2, *ptr3, *ptr4);
+
+
+    /*
+    // Create constant pointer that points to var 'age1'
+    int *const ptr1 = &age1;
+    printf("var1=%d var2=%d\n", age1, age2);
+    
+
+    // Modify var 'age1' value, not the actual pointer!
+    *ptr1 = 30;
+    printf("var1=%d var2=%d\n", age1, age2);
+    
+
+    // // To-fail attempt to change the pointer itself
+    // ptr = &age2;
+
+    printf("var1=%d var2=%d\n", age1, age2);
+    */
+    
+
+    return 0;
+}
+```
+-->
+
+4. Constant pointer pointing to constant integer. Neither the Pointer nor the Value can be changed. BOTH ARE CONSTANTS! == `const int *const ptr;`
+
+
+### 3 main reasons for using constants
+
+1. Performance! == Easier compiling if large program
+2. Defense! == Ensure values may not change 
+3. Code Readability
+
+</details>
+
+
+## 9.4 Counting Arrays
+
+### Intro - Counting with Separated Counter Variables
+### Working with Counter Arrays
+### Basic Exercise #1 - Set 0-5
+### Basic Exercise #2 - Find Max Appearances (Set 0-9)
+### Moving forward with the Mapping
+### Basic Exercise #3 - Find Max Appearances (Set 5-10)
+### Chall. #1 - Finding the lowercase letter that appears the most
+### Chall. #2 - Finding the uppercase letter that appears the most
+### Chall. #3 - Finding the letter that appears the most
