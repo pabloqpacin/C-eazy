@@ -1,25 +1,39 @@
-# 9. Structs
+# 9. Structs-Unions-Constants
 
 <details>
 <summary>Table of Contents</summary>
 
-- [9. Structs](#9-structs)
-  - [Creating a Structure Template](#creating-a-structure-template)
-  - [Structure Variables](#structure-variables)
-  - [Challenge #1 - Initialize \& Print Date Variable (Struct)](#challenge-1---initialize--print-date-variable-struct)
-  - [Typedef \& Structures](#typedef--structures)
-  - [Chall.#2 - General FunctionZ to use Input \& Print of a struct](#chall2---general-functionz-to-use-input--print-of-a-struct)
-  - [Chall.#3 - Find the Next Date](#chall3---find-the-next-date)
-  - [Initializing a Struct in C (Variables)](#initializing-a-struct-in-c-variables)
-  - [Chall.#4 - Input Point \& Print Point](#chall4---input-point--print-point)
-  - [Static Array of Structs](#static-array-of-structs)
-  - [Writing Associate Logical Functions](#writing-associate-logical-functions)
-  - [Composing struct inside another struct](#composing-struct-inside-another-struct)
-  - [Structs as the BASIS for more Advanced Topics](#structs-as-the-basis-for-more-advanced-topics)
+- [9. Structs-Unions-Constants](#9-structs-unions-constants)
+  - [9.1 Structs](#91-structs)
+    - [Creating a Structure Template](#creating-a-structure-template)
+    - [Structure Variables](#structure-variables)
+    - [Challenge #1 - Initialize \& Print Date Variable (Struct)](#challenge-1---initialize--print-date-variable-struct)
+    - [Typedef \& Structures](#typedef--structures)
+    - [Chall.#2 - General FunctionZ to use Input \& Print of a struct](#chall2---general-functionz-to-use-input--print-of-a-struct)
+    - [Chall.#3 - Find the Next Date](#chall3---find-the-next-date)
+    - [Initializing a Struct in C (Variables)](#initializing-a-struct-in-c-variables)
+    - [Chall.#4 - Input Point \& Print Point](#chall4---input-point--print-point)
+    - [Static Array of Structs](#static-array-of-structs)
+    - [Writing Associate Logical Functions](#writing-associate-logical-functions)
+    - [Composing struct inside another struct](#composing-struct-inside-another-struct)
+    - [Structs as the BASIS for more Advanced Topics](#structs-as-the-basis-for-more-advanced-topics)
+  - [9.2 Unions](#92-unions)
+    - [General Introduction](#general-introduction)
+    - [Unions - Variables](#unions---variables)
+    - [Usage, Practice, Examples](#usage-practice-examples)
+      - [Example 01](#example-01)
+      - [Example 02](#example-02)
+    - [Additional Explanations and Examples (Pointers, Arrays...)](#additional-explanations-and-examples-pointers-arrays)
+  - [9.3 Constants](#93-constants)
 
 </details>
 
-## Creating a Structure Template
+## 9.1 Structs
+
+<details>
+<summary>Details</summary>
+
+### Creating a Structure Template
 
 ```c
 struct <struct-name>{
@@ -60,7 +74,7 @@ struct address{
 
 </details>
 
-## Structure Variables
+### Structure Variables
 
 <details>
 <summary>Explanation</summary>
@@ -85,7 +99,7 @@ printf("%d", myDate.year);
 ```
 </details>
 
-## Challenge #1 - Initialize & Print Date Variable (Struct)
+### Challenge #1 - Initialize & Print Date Variable (Struct)
 
 ```c
 #include <stdio.h>
@@ -123,7 +137,7 @@ int main(){
 }
 ```
 
-## Typedef & Structures
+### Typedef & Structures
 
 <details>
 <summary>Explanation</summary>
@@ -182,7 +196,7 @@ Date inputDate(){
 
 </details>
 
-## Chall.#2 - General FunctionZ to use Input & Print of a struct
+### Chall.#2 - General FunctionZ to use Input & Print of a struct
 
 ```c
 #include <stdio.h>
@@ -221,7 +235,7 @@ int main(){
 ```
 
 
-## Chall.#3 - Find the Next Date
+### Chall.#3 - Find the Next Date
 
 - Write a function that
   - Receives a 'date' variable
@@ -281,7 +295,7 @@ int main(){
 }
 ```
 
-## Initializing a Struct in C (Variables)
+### Initializing a Struct in C (Variables)
 
 <details>
 <summary>Explanation</summary>
@@ -330,7 +344,7 @@ int main(){
 </details>
 
 
-## Chall.#4 - Input Point & Print Point
+### Chall.#4 - Input Point & Print Point
 
 - Write 2 functions:
   - #1: Gets a point variable and prints its information
@@ -367,7 +381,7 @@ int main(){
 ```
 
 
-## Static Array of Structs
+### Static Array of Structs
 
 ```c
 #include <stdio.h>
@@ -493,7 +507,7 @@ int main(){
 -->
 
 
-## Writing Associate Logical Functions
+### Writing Associate Logical Functions
 
 > Relational Operators: `<, >, <=, >=, !=, ==`
 
@@ -524,7 +538,7 @@ int main(){
 <!--ALSO used for emp1 age, id, etck-->
 
 <!--
-## Comprehensive Exercise - Rational Numbers Struct
+### Comprehensive Exercise - Rational Numbers Struct
 
 <details>
 <summary>Request</summary>
@@ -619,7 +633,7 @@ int main(){
 ```
 -->
 
-## Composing struct inside another struct
+### Composing struct inside another struct
 
 ```c
 #include <stdio.h>
@@ -653,6 +667,178 @@ int main(){
 }
 ```
 
-## Structs as the BASIS for more Advanced Topics
+### Structs as the BASIS for more Advanced Topics
 
 - Structs as BASIS for Data Structures (Linked Lists, Trees, etc.)
+
+</details>
+
+## 9.2 Unions
+
+<details>
+<summary>Details</summary>
+
+### General Introduction
+
+- Useful for embedded devices (memory map registers to communicate with peripherals)
+- == User Defined Data Type (as Structs)
+- Collection of elements/variables of different types **stored in the same memory region**
+
+### Unions - Variables
+
+```c
+union <union-name> {
+    datatype1 field1;
+    datatype2 field2;
+};
+```
+
+```c
+union info{
+    char firstName[20];
+    int age;
+};
+
+union minMax{
+    int min;
+    int max;
+    double average;
+};
+```
+
+### Usage, Practice, Examples
+
+Difference with *Sructs* & COMPLETE examples
+
+```markdown
+STRUCT --> Separate block of memory for each variable
+UNION ---> One memory region SHARED (size == max datatype size) // data overlaps
+```
+
+#### Example 01
+
+```c
+#include <stdio.h>
+#include <string.h>
+
+struct info_struct{       // 24 BYTES!!
+    char firstName[20];     // 20 bytes
+    int age;                // 4 bytes
+};  
+
+union info_union{         // 20 BYTES!!
+    char firstName[20];     // 20 bytes
+    int age;                // ~~4 bytes~~
+};
+
+
+int main(){
+
+    union info_union myVar1;
+
+    myVar1.age = 30;
+    printf("Age: %d \n", myVar1.age);
+
+    strcpy(myVar1.firstName, "supdawg!");
+    printf("Name: %s \n", myVar1.firstName);
+
+    printf("Age: %d (OVERLAPPED) \n", myVar1.age);
+
+    return 0;
+}
+```
+#### Example 02
+
+```c
+#include <stdio.h>
+
+struct point_struct{
+    int x;
+    int y;
+};
+
+union point_union{
+    int x;
+    int y;
+};
+
+int main(){
+
+    struct point_struct p1; // 8 bytes!!
+    p1.x = 5;   // 4 bytes
+    p1.y = 7;   // 4 bytes
+    printf("p1_struct: x=%d y=%d \n", p1.x, p1.y);
+    
+    union point_union p2;   // 4 bytes!!
+    p2.x = 4;   // ~~4 bytes~~
+    printf("p2_union: x=%d y=%d \n", p2.x, p2.y);
+    p2.y = 6;   // 4 bytes
+    printf("p2_union: x=%d y=%d \n", p2.x, p2.y);
+
+    return 0;
+}
+```
+
+
+### Additional Explanations and Examples (Pointers, Arrays...)
+
+```c
+#include <stdio.h>
+#define SIZE 3
+
+/*
+struct Student_struct{      // 16 bytes (??)
+    int ID;                   // 4 bytes
+    double GPA;               // 8 bytes
+};
+*/
+
+
+typedef union student{      // 8 bytes  --> Store capacity for either ID or GPA!
+    int ID;                   // ~~4 bytes~~
+    double GPA;               // 8 bytes
+}Student;
+
+
+int main(){
+
+    Student s1;
+    Student *ptrS2;
+
+    printf("Size of s1 union = %lu \n", sizeof(s1));
+    printf("Size of ptrS2 union = %lu \n", sizeof(ptrS2));
+
+    s1.ID = 5;
+    printf("s1.ID = %d \n", s1.ID);
+
+    ptrS2 = &s1;
+    ptrS2->ID = 10;
+    printf("s1.ID = %d \n", s1.ID);
+
+
+
+    Student sArr[SIZE];
+    int i;
+
+    for (i=0; i<SIZE; i++){
+        printf("Enter ID for s%d: ", i+1);
+        scanf("%d", &sArr[i].ID);
+    }
+
+    for (i=0; i<SIZE; i++){
+        printf("Student #%d ID = %d \n", i+1, sArr[i].ID);
+    }
+
+
+    /*
+    struct Student_struct s1_s;
+    printf("Size of s1 struct = %lu \n", sizeof(s1_s));
+    */
+
+
+    return 0;
+}
+```
+
+
+## 9.3 Constants
