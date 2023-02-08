@@ -32,6 +32,7 @@
   - [9.4 Counting Arrays](#94-counting-arrays)
     - [Intro - Counting with Separated Counter Variables](#intro---counting-with-separated-counter-variables)
     - [Working with Counter Arrays](#working-with-counter-arrays)
+      - [Counting Array - Learning the Concept](#counting-array---learning-the-concept)
     - [Basic Exercise #1 - Set 0-5](#basic-exercise-1---set-0-5)
     - [Basic Exercise #2 - Find Max Appearances (Set 0-9)](#basic-exercise-2---find-max-appearances-set-0-9)
     - [Moving forward with the Mapping](#moving-forward-with-the-mapping)
@@ -979,12 +980,418 @@ int main(){
 
 ## 9.4 Counting Arrays
 
+<details>
+<summary>Details</summary>
+
 ### Intro - Counting with Separated Counter Variables
+
+<details>
+<summary>Intro</summary>
+
+
+- Counting Appearances of Array with values {0,1}
+  1. Given an array of a given size... The array consists only of values {0,1}. Eg. `0,1,0,1,0,0,1,0`
+  2. We would like to know number of appearances of value 0 and value 1 in the array.
+  3. Create two variables `count0` and `count1` and iterate 
+
+- Counting with values {0,1,2}
+
+```c
+#include <stdio.h>
+#define SIZE 8
+
+int main(){
+
+    int arr[SIZE] = {0,2,0,1,0,0,2,0};
+    int count0, count1, count2;
+    int i;
+
+    for (i=0; i<SIZE; i++){
+        if (0 == arr[i]) count0++;
+        else if (1 == arr[i]) count1++;
+        else if (1 == arr[i]) count1++;
+        else if (2 == arr[i]) count2++;
+    }
+
+    printf("Number of '0' = %d \n", count0);
+    printf("Number of '1' = %d \n", count1);
+    printf("Number of '2' = %d \n", count2);
+
+    return 0;
+}
+```
+
+- What if the possibilities are now 5? What if 10? 100??
+
+</details>
+
 ### Working with Counter Arrays
+
+<details>
+<summary>Transition</summary>
+
+- Counting Array for values {0,1,2}
+  1. We know the values can be {0,1,2}... Hence we need 3 'counting variables'.
+  2. Let's create a sequence/array for counting. A sequence of 3 'counting variables' == `countArr={0,1,2}`
+  3. Similarly, 3 variables to count.
+
+```c
+#include <stdio.h>
+#define SIZE 8
+
+int main(){
+
+    int arr[SIZE] = {0,2,0,1,0,0,2,0};
+    int countArr[3];
+    int i;
+
+    for (i=0; i<SIZE; i++){
+        if (0 == arr[i]) countArr[0]++;
+        else if (1 == arr[i]) countArr[1]++;
+        else if (2 == arr[i]) countArr[2]++;
+    }
+
+    printf("Number of '0' = %d \n", countArr[0]);
+    printf("Number of '1' = %d \n", countArr[1]);
+    printf("Number of '2' = %d \n", countArr[2]);
+
+    return 0;
+}
+```
+
+> Still too many dependencies!!
+
+#### Counting Array - Learning the Concept
+
+- What value can each of the elements in the `sourceArr` have? -> {0,1,2}
+- Mapping `sourceArr` values to the `countArr` indexes -> (if ... foo++)
+
+```c
+#include <stdio.h>
+#define SIZE 8
+
+int main(){
+
+    int sourceArr[SIZE] = {0,2,0,1,0,0,2,0};
+    int countArr[3] = {0};
+    int i;
+
+    for (i=0; i<SIZE; i++){
+        countArr[sourceArr[i]]++;
+    }
+
+    printf("Number of '0' = %d \n", countArr[0]);
+    printf("Number of '1' = %d \n", countArr[1]);
+    printf("Number of '2' = %d \n", countArr[2]);
+
+    return 0;
+}
+```
+
+<!-- > It works because values == indexes! -->
+
+</details>
+
 ### Basic Exercise #1 - Set 0-5
+
+```c
+#include <stdio.h>
+#define SIZE 8
+
+int main(){
+
+    int sourceArr[SIZE] = {0,5,2,4,3,4,2,0};
+    int countArr[6] = {0};
+    int i;
+
+    for (i=0; i<SIZE; i++)
+        countArr[sourceArr[i]]++;
+
+    for (i=0; i<6; i++)
+        printf("Number of '%d' = %d \n", i, countArr[i]);
+
+    return 0;
+}
+```
+
 ### Basic Exercise #2 - Find Max Appearances (Set 0-9)
+
+- Write a program that initializes an array with 20 elements. Each element can be a number with only 1 digit ({0-9}).
+- Using 'Counting Array', find which value appears the most in the 'Source Array'. Print this value and the number of its appearances.
+
+<details>
+<summary>Snippet</summary>
+
+```c
+#include <stdio.h>
+#define SIZE 20
+#define VALUES 10
+
+int main(){
+
+    int mostValue, mostTimes;
+    int sourceArr[SIZE] = {0,5,4,9,5,8,2,3,1,5,4,9,5,5,2,7,6,5,4,1};
+    int countArr[VALUES] = {0};
+    int i;
+
+    for (i=0; i<SIZE; i++)
+        countArr[sourceArr[i]]++;
+
+    for (i=0; i<VALUES; i++){
+        if (countArr[i] > mostTimes){
+            mostValue=i;
+            mostTimes=countArr[i];
+        } 
+    }
+
+    printf("The value of %d appeared most of the times. Total of %d appearances \n", mostValue, mostTimes);
+
+    return 0;
+}
+```
+</details>
+
+<details>
+<summary>@Vlad's</summary>
+
+```c
+#include <stdio.h>
+#define SIZE 20
+#define VALUES 10
+
+int main(){
+
+    int maxIndex;
+    int sourceArr[SIZE] = {0,5,4,9,5,8,2,3,1,5,4,9,5,5,2,7,6,5,4,1};
+    int countArr[VALUES] = {0};
+    int i;
+
+    for (i=0; i<SIZE; i++)
+        countArr[sourceArr[i]]++;
+
+    for (i=0; i<VALUES; i++)
+        if (countArr[i] > maxIndex)
+            maxIndex = i;
+
+    printf("The value of %d appeared most of the times. Total of %d appearances \n", maxIndex, countArr[maxIndex]);
+
+    return 0;
+}
+```
+
+</details>
+
+
 ### Moving forward with the Mapping
+
+- Now what if `sourceArr` values were only {5-10}?
+  - Still 5 possible values but not CORRESPONDING with the indexes.
+  - We can't map DIRECTLY now...
+  - But can still do: src.value5 = count.index0, 6 = 1, etc etc
+  - Therefore `countArr[sourceArr[i-5]]`
+
+
 ### Basic Exercise #3 - Find Max Appearances (Set 5-10)
+
+- Write a program that initializes an array with 8 elements. Each element can have a value in the range of {5-10}
+- Using 'Counting Array' and 'Appropiate Mapping', find which value appears the most in the 'Source Array'. Also, print this value and the number of its appearances.
+
+
+```c
+#include <stdio.h>
+#define SIZE 8
+#define VALUES 6
+
+int main(){
+
+    int sourceArr[SIZE] = {7,5,6,9,6,7,10,7};
+    int countArr[VALUES];
+    int i, maxIndex;
+
+    for (i=0; i<SIZE; i++)
+        countArr[sourceArr[i]-5]++;
+
+    for (i=0; i<VALUES; i++)
+        if (countArr[i] > countArr[maxIndex])
+            maxIndex=i;
+
+    printf("The value of %d appeared most of the times. Total of %d appearances \n", \
+    maxIndex+5, countArr[maxIndex]);
+
+    return 0;
+}
+```
+
 ### Chall. #1 - Finding the lowercase letter that appears the most
+
+- Write a program that initializes an array of lowercase letters {a-z}
+- Using 'Counting Array' and 'Appropiate Mapping', find which lowercase letter appears the most in the 'Source Array'.
+  - Also, print its value and the number of its appearances.
+- Example: `sourceArray = {k,i,b,r,c,k,z,m};` // The letter 'k' appeared most of the times. Total of '2' appearances.
+
+<!--ASCII??-->
+
+<details>
+<summary>Snippet</summary>
+
+```c
+/* ASCII
+    a = 97
+    z = 122
+    '-97'
+*/
+
+#include <stdio.h>
+#define SIZE 8
+#define VALUES 26
+
+int main(){
+
+    char sourceArr[SIZE] = {'k','i','b','r','c','k','z','m'};
+    int countArr[VALUES];
+    int i, maxIndex;
+
+    for (i=0; i<SIZE; i++)
+        countArr[sourceArr[i]-'a']++;
+
+    for (i=0; i<VALUES; i++)
+        if (countArr[i] > countArr[maxIndex])
+            maxIndex = i;
+
+    printf("Letter %c appeared the most (%d times) \n", maxIndex+'a', countArr[maxIndex]);
+
+    return 0;
+}
+```
+
+</details>
+
 ### Chall. #2 - Finding the uppercase letter that appears the most
+
+<details>
+<summary>Snippet</summary>
+
+```c
+/* ASCII
+    a = 65
+    z = 90
+    '-65'
+*/
+
+#include <stdio.h>
+#define SIZE 8
+#define VALUES 26
+
+int main(){
+
+    char sourceArr[SIZE] = {'K','I','B','R','C','K','Z','M'};
+    int countArr[VALUES];
+    int i, maxIndex;
+
+    for (i=0; i<SIZE; i++)
+        countArr[sourceArr[i]-'A']++;
+
+    for (i=0; i<VALUES; i++)
+        if (countArr[i] > countArr[maxIndex])
+            maxIndex = i;
+
+    printf("Letter %c appeared the most (%d times) \n", maxIndex+'A', countArr[maxIndex]);
+
+    return 0;
+}
+```
+
+</details>
+
 ### Chall. #3 - Finding the letter that appears the most
+
+- Write a program that initializes an array of lowercase, uppercase and space character { a-z | A-Z | ' ' }
+  - `sourceArr[8] = {'K','O','c','R','C',' ','K','r'};`
+- Using 'Counting Array' and 'Appropiate Mapping', find which **letter** appears the most in the 'Source Array'. Also, print its value and the number of its appearances.
+
+```c
+/* ASCII
+    ' ' = 32    // we don't care
+    'A' = 65
+    'Z' = 90
+    'a' = 97
+    'z' = 122
+*/
+
+#include <stdio.h>
+#define SIZE 8
+#define VALUES 52
+
+int main(){
+
+    char arr[8] = {'K','O','c','R','C',' ','K','r'};
+    int countArr[VALUES];   // 0-25=a-z, 26-51=A-Z;
+    int i, maxIndex;
+
+
+    for (i=0; i<SIZE; i++){
+        if (arr[i] >= 'a' && arr[i] <= 'z')
+            countArr[arr[i] - 'a']++;
+        if (arr[i] >= 'A' && arr[i] <= 'Z')
+            countArr[arr[i] - 'A' + 26]++;
+    }
+
+
+    for (i=0; i<VALUES; i++)
+        if (countArr[i] > countArr[maxIndex])
+            maxIndex = i;
+
+
+    if (maxIndex < 26)
+        printf("Letter %c appeared the most (%d times) \n", maxIndex + 'a', countArr[maxIndex]);
+    else printf("Letter %c appeared the most (%d times) \n", maxIndex + 'A' - 26, countArr[maxIndex]);
+
+    return 0;
+}
+```
+
+<!-- SILLY PROTOTYPE
+```c
+/* ASCII
+    ' ' = 32
+    'A' = 65
+    'Z' = 90
+    'a' = 97
+    'z' = 122
+*/
+
+#include <stdio.h>
+#define SIZE 8
+#define VALUES 53
+
+int main(){
+
+    char sourceArr[8] = {'K','O','c','R','C',' ','K','r'};
+    int countArr[VALUES];
+    int i, maxIndex;
+
+
+    for (i=0; i<SIZE; i++){
+        if (sourceArr[i] == ' ')
+            countArr[0]++;
+        if (sourceArr[i] >= 'A' && sourceArr[i] <= 'Z')
+            countArr[sourceArr[i]-'A']++;
+        if (sourceArr[i] >= 'a' && sourceArr[i] <= 'z')
+            countArr[sourceArr[i]-'a']++;
+    }
+
+
+    for (i=0; i<VALUES; i++){
+        if (countArr[i] > countArr[maxIndex])
+            maxIndex = i;
+    }
+
+    printf("Letter %c appeared the most (%d times) \n", maxIndex+'A', countArr[maxIndex]);
+
+    return 0;
+}
+```
+-->
+
+
+</details>
