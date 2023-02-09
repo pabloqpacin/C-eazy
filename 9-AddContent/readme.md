@@ -1,9 +1,9 @@
-# 9. Structs-Unions-Constants
+# 9. Additional Content...
 
 <details>
 <summary>Table of Contents</summary>
 
-- [9. Structs-Unions-Constants](#9-structs-unions-constants)
+- [9. Additional Content...](#9-additional-content)
   - [9.1 Structs](#91-structs)
     - [Creating a Structure Template](#creating-a-structure-template)
     - [Structure Variables](#structure-variables)
@@ -40,6 +40,32 @@
     - [Chall. #1 - Finding the lowercase letter that appears the most](#chall-1---finding-the-lowercase-letter-that-appears-the-most)
     - [Chall. #2 - Finding the uppercase letter that appears the most](#chall-2---finding-the-uppercase-letter-that-appears-the-most)
     - [Chall. #3 - Finding the letter that appears the most](#chall-3---finding-the-letter-that-appears-the-most)
+  - [9.5 Working with Files](#95-working-with-files)
+    - [What is a file \[as a stream of bytes\]](#what-is-a-file-as-a-stream-of-bytes)
+    - [Examples of Stream already used (Input/Output/Error)](#examples-of-stream-already-used-inputoutputerror)
+    - [Start with Files - Steps and Syntax in C](#start-with-files---steps-and-syntax-in-c)
+    - [Creating and Reading from a File](#creating-and-reading-from-a-file)
+    - [Intro to 6 basic functions for working with textual files](#intro-to-6-basic-functions-for-working-with-textual-files)
+      - [`fgetc` (`r`)](#fgetc-r)
+      - [`fputc` (`w`)](#fputc-w)
+      - [`fprintf` (`w`) \& `fscanf` (`r`)](#fprintf-w--fscanf-r)
+      - [`fputs` (`w`)](#fputs-w)
+      - [`fgets` (`r`)](#fgets-r)
+    - [Introducing EOF](#introducing-eof)
+    - [Challenges](#challenges)
+      - [Chall #1 - Number of Characters in a file](#chall-1---number-of-characters-in-a-file)
+      - [Chall #2 - Number of Lines in a file](#chall-2---number-of-lines-in-a-file)
+      - [Chall #3 - Writing Numbers and their Powers to a file](#chall-3---writing-numbers-and-their-powers-to-a-file)
+      - [Chall #4 - Reading Numbers from a file](#chall-4---reading-numbers-from-a-file)
+      - [Chall #5 - Calculate character appearances in a file](#chall-5---calculate-character-appearances-in-a-file)
+      - [Chall #6 - lowerFrequencyAppearances for Lowercase letters](#chall-6---lowerfrequencyappearances-for-lowercase-letters)
+      - [Chall #7 - Print Max Appearances Lowercase Letter in file](#chall-7---print-max-appearances-lowercase-letter-in-file)
+  - [9.6 Linked Lists](#96-linked-lists)
+    - [Creating a Linked List](#creating-a-linked-list)
+    - [Count of Nodes in a List](#count-of-nodes-in-a-list)
+    - [How to use bool Data Types?](#how-to-use-bool-data-types)
+    - [Finding an Element within a List](#finding-an-element-within-a-list)
+    - [Count the number of values in a List](#count-the-number-of-values-in-a-list)
 
 </details>
 
@@ -1393,5 +1419,651 @@ int main(){
 ```
 -->
 
+
+</details>
+
+## 9.5 Working with Files
+
+<details>
+<summary>Details</summary>
+
+### What is a file [as a stream of bytes]
+
+- Two types
+  - Textual files
+  - Binary files
+- Communication between files, programs, devices...
+
+### Examples of Stream already used (Input/Output/Error)
+
+- Keyboard -> Input stream -> Queue structure -> Standard input (Stdin) -> Program (`scanf`)
+- Program -> Output structure -> Standard Output / Standard Error -> Screen
+- **NOW**: read from file && write to file
+
+### Start with Files - Steps and Syntax in C
+
+<details>
+<summary>Explanation</summary>
+
+```c
+#include <stdio.h>
+
+int main(){
+
+    // int* p;
+    // double* p2;
+
+    // 1. Creating a Pointer that points to a FILE type
+    FILE* fp;
+
+    /*  2. Open/access a file
+    fp = fopen(<filename> <typeOfOperation>);
+    Types of operation:
+        - w = writing
+        - r = reading
+        - a = appending
+    */
+    fp = fopen();
+
+
+    // 3. Make sure the open operation was successful
+    if (fp!=NULL)
+
+    // 4. After operations, close the file!
+    fclose(fp);
+
+
+    return 0;
+}
+```
+
+</details>
+
+### Creating and Reading from a File
+
+```c
+#include <stdio.h>
+
+int main(){
+
+    FILE* fp;
+
+    fp = fopen("supdawg.md","w");
+
+    if (fp==NULL) puts("Failed to Open File");
+    else{
+        puts("File Opened for Writing!");
+        fclose(fp);
+    } 
+
+    return 0;
+}
+```
+
+### Intro to 6 basic functions for working with textual files
+
+```markdown
+r) fgetc(<ptr_to_file>)
+w) fputc(<char>, <ptr>)
+w) fprintf(<ptr>, <placeholder>, <parameters>)
+r) fscanf(<ptr>, <placeholder>, <parameters>)
+w) fputs(<string>,<ptr>)
+r) fgets(<string>, <int/length_limit>, <ptr>)
+```
+
+<details>
+<summary>One by one</summary>
+
+#### `fgetc` (`r`)
+
+```c
+/*
+    File 'supdawg.md' already exists.
+    Contents = 'Hiya!'
+*/
+
+#include <stdio.h>
+
+int main(){
+
+    FILE* fp;
+    char myChar1, myChar2;
+
+    fp = fopen("supdawg.md","r");
+
+    if (fp==NULL) puts("Failed to Open File");
+    else{
+        puts("File Opened for READING");
+        myChar1 = fgetc(fp);
+        printf("First character read = %c \n", myChar1);    // 'H'
+        myChar2 = fgetc(fp);
+        printf("Second character read = %c \n", myChar2);   // 'i'
+        // fgetc(stdin); // ...
+        fclose(fp);
+    } 
+
+    return 0;
+}
+
+/*
+    NOTE: loops can be coded for a more complete program!
+*/
+```
+
+#### `fputc` (`w`)
+
+- Takes a char and a pointer to an file, writes it in
+- NOTE: single quotes for chars, double quotes for strings!!
+
+```c
+#include <stdio.h>
+
+int main(){
+
+    FILE* fp;
+
+    fp = fopen("supdawg.md","w");
+
+    if (fp==NULL) puts("Failed to Open File");
+    else{
+        puts("--File Opened for WRITING--");
+        fputc('H', fp);
+        fputc('e', fp);
+        fputc('y', fp);
+        fclose(fp);
+    } 
+
+    return 0;
+}
+```
+
+> Honorable mention to `putchar('a', stdout);`
+
+#### `fprintf` (`w`) & `fscanf` (`r`)
+
+- `fprintf` print [code variables] to file!!
+  - returns number of bytes written!! <!--SOO-->
+- it can also print to terminal if `fprintf(STDOUT, ...);`
+
+```c
+#include <stdio.h>
+
+int main(){
+
+    FILE* fp;
+    int num = 6;
+    int num2;
+
+    fp = fopen("supdawg.md","w");
+
+    if (fp==NULL) puts("Failed to Open File");
+    else{
+        puts("--File Opened for WRITING--");        
+        fprintf(fp, "%d^2 = %d", num, num*num);
+        fclose(fp);
+    } 
+
+    fp = fopen("supdawg.md","r");
+
+    if (fp==NULL) puts("Failed to Open File");
+    else{
+        puts("--File Opened for READING--");        
+        fscanf(fp, "%d", &num2);
+        printf("Num from file = %d \n", num2);
+        fclose(fp);
+    }
+
+    return 0;
+}
+
+```
+
+#### `fputs` (`w`)
+
+- MIND: **no 'newline'** (`\n`)!!
+
+```c
+#include <stdio.h>
+
+int main(){
+
+    FILE* fp;
+
+    fp = fopen("supdawg.md","w");
+
+    if (fp==NULL) puts("Failed to Open File");
+    else{
+        puts("--File Opened for WRITING--");
+        fputs("Supdawg? \n", fp);
+        fputs("C iz eazy don't ye see?", fp);
+        fclose(fp);
+    } 
+
+    return 0;
+}
+```
+
+#### `fgets` (`r`)
+
+```c
+#include <stdio.h>
+
+int main(){
+
+    FILE* fp;
+    char myString[9];
+    int count;
+
+    fp = fopen("supdawg.md","r");
+
+    if (fp==NULL) puts("Failed to Open File");
+    else{
+        puts("--File Opened for READING--");
+        while (fgets(myString, 9, fp))
+            printf("String #%d read: %s \n", ++count, myString);
+
+        fclose(fp);
+    } 
+
+    return 0;
+}
+```
+
+- [ ] REVIEW!
+
+</details>
+
+### Introducing EOF
+
+- Remember `\0` represents end of string
+  - Store *within* the string
+- For **EOF**, generally `-1`
+  - Not stored at the end of file!!
+  - Specifier/indicator to the lower-level system
+- NOTE: function `feof(fp);` 
+
+```c
+while (!(feof(fp)))
+    // do smth before EOF
+```
+
+
+### Challenges
+
+#### Chall #1 - Number of Characters in a file
+
+- Write a program that opens a file for Reading and calculates number of characters (use `fgetc` to print each char)
+
+
+```c
+#include <stdio.h>
+
+int main(){
+
+    FILE* fp;
+    char fileChar;
+    int numChars;
+
+
+    fp = fopen("supdawg.md","r");
+
+    if (fp==NULL) puts("Failed to Open File");
+    else{
+        puts("--File Opened for READING-- \n");
+        while ((fileChar = fgetc(fp)) != EOF){
+            printf("%c %d \n", fileChar, fileChar);
+            numChars++;
+        }
+
+        fclose(fp);
+    } 
+
+    printf("\nTotal num of chars = %d \n", numChars);
+    return 0;
+}
+```
+
+<!-- un-optimized
+
+while (!(feof(fp))){
+            fileChar = fgetc(fp);
+            if (fileChar != -1){
+                printf("%c %d \n", fileChar, fileChar);
+                numChars++;
+            }
+-->
+
+
+#### Chall #2 - Number of Lines in a file
+
+- Write a program that returns number of lines in file
+
+```c
+#include <stdio.h>
+
+int main(){
+
+    FILE* fp;
+    char fileChar;
+    int numLines = 1;
+
+    fp = fopen("supdawg.md","r");
+
+    if (fp==NULL) puts("Failed to Open File");
+    else{
+        puts("--File Opened for READING-- \n");
+        while ((fileChar = fgetc(fp)) != EOF)
+            if (fileChar == 10)     // == '\n'
+                numLines++;
+
+        fclose(fp);
+    } 
+
+    printf("Total num of lines = %d \n", numLines);
+    return 0;
+}
+```
+
+<!--
+while (!(feof(fp))){
+    fileChar = fgetc(fp);
+    if (fileChar == 10 || fileChar == -1)
+        numLines++;
+}
+-->
+
+#### Chall #3 - Writing Numbers and their Powers to a file
+
+- Write program that will save into a file 10 natural numbers {1-10} and their powers.
+
+```c
+#include <stdio.h>
+
+int main(){
+
+    FILE* fp;
+    int i;
+
+    fp = fopen("supdawg.md","w");
+
+    if (fp==NULL) puts("Failed to Open File");
+    else{
+        puts("--File Opened for WRITING-- \n");
+        for (i=1; i<=10; i++)
+            fprintf(fp, "%d %d \n", i, i*i);
+
+        fclose(fp);
+    } 
+
+    return 0;
+}
+```
+
+#### Chall #4 - Reading Numbers from a file
+
+- Read numbers from previous files and print them to the terminal!
+
+```c
+/* APPROACH
+    1. Take numbers two by two
+    2. Take strings line by line
+*/
+
+#include <stdio.h>
+
+int main(){
+
+    FILE* fp;
+    int i;
+    int numFile, powerFile;
+    char lineFile[10];
+
+    fp = fopen("supdawg.md","r");
+
+    if (fp==NULL) puts("Failed to Open File");
+    else{
+        puts("--File Opened for READING-- \n");
+        
+        // 1. Numbers two by two (as per lines)
+        for (i=1; i<=10; i++){
+            fscanf(fp, "%d %d", &numFile, &powerFile);
+            printf("%d %d \n", numFile, powerFile);
+        }
+        
+        // 2. Strings line by line
+        /*  while (!(feof(fp))){
+            printf("%s \n", lineFile);
+            fgets(lineFile, 10, fp);
+        } */
+
+        fclose(fp);
+    } 
+
+    return 0;
+}
+```
+
+#### Chall #5 - Calculate character appearances in a file
+
+- Write a program that reads a 'filename' and a certain 'character' from the user.
+- The program should calculate and print the total appearances of the character in the file.
+
+> Filename: 'aptShowGcc.log'
+
+```c
+/* NOTE
+    Filename == "aptShowGcc.log"
+    'Assume file is in the same workspace as src-code,
+    so we don't need to specify PATH!
+*/
+
+/* TROUBLESHOOTING
+    - 'scanf("%s", filename);'
+    - 'scanf(" %c", &charSearch);' 
+    Mind lack of '&' and ' ' respectively!
+*/
+
+#include <stdio.h>
+
+int main(){
+
+    FILE* fp;
+    char filename[40] = {0};
+    char charSearch;
+    int charNum;
+
+    // User input
+    puts("This program will search a character in a file and print its number of appearances");
+    printf("Enter filename: ");     // Extension, PATH...
+    scanf("%s", filename);
+    printf("Enter character: ");
+    scanf(" %c", &charSearch);
+
+    // Retrieve file data
+    fp = fopen(filename, "r");
+
+    if (fp==NULL) puts("Failed to Open File");
+    else{
+        puts("--File Opened for READING-- \n");
+        
+        while (!feof(fp))
+            if (fgetc(fp) == charSearch)
+                charNum++;
+
+        fclose(fp);
+    } 
+
+    printf("Char '%c' appeared '%d' times in file '%s' \n\n", charSearch, charNum, filename);
+
+    return 0;
+}
+```
+
+<!-- ALT
+while ((charCurrent = fgetc(fp)) != EOF)
+    if (charCurrent == charSearch)
+        charNum++;
+-->
+
+#### Chall #6 - lowerFrequencyAppearances for Lowercase letters
+
+- Write a program that
+  - reads a 'filename' from the user
+  - creates a 'frequencyAppearances' array for lowercase letters {a-z}
+  - prints the number of times each lowercase letter appears in the file.
+
+```c
+#include <stdio.h>
+#define VALUES 26
+
+int main(){
+
+    FILE* fp;
+    char filename[40] = {0};
+    int frequencyAppearances[VALUES] = {0}; // 0-a 1-b ... 25-z
+    char currentChar;
+    int i;
+    
+    printf("Enter filename: ");     // Extension, PATH...
+    scanf("%s", filename);
+
+    fp = fopen(filename, "r");
+
+    if (fp==NULL) puts("Failed to Open File");
+    else{
+        puts("--File Opened for READING-- \n");
+        
+        while ((currentChar = fgetc(fp)) != EOF)
+            if (currentChar >= 'a' && currentChar <= 'z')
+                frequencyAppearances[currentChar-'a']++;
+
+        fclose(fp);
+    } 
+
+    puts("Alphabetical order");
+    for (i=0; i<VALUES; i++)
+        printf("Letter '%c' appeared '%d' times \n", i+'a', frequencyAppearances[i]);
+
+    // puts("Frequency order");
+
+    return 0;
+}
+```
+
+<!-- prototype OK
+currentChar = 'a';
+puts("Alphabetical order");
+for (i=0; i<VALUES; i++)
+    printf("Letter '%c' appeared '%d' times \n", currentChar++, frequencyAppearances[i]);
+-->
+
+#### Chall #7 - Print Max Appearances Lowercase Letter in file
+
+- Write a program that
+  - reads a filename from the user
+  - creates a 'frequencyAppearances' array for lowercase letters {a-z}
+  - prints the (first) character that appeared most of the times.
+
+
+```c
+#include <stdio.h>
+#define VALUES 26
+
+int main(){
+
+    FILE* fp;
+    char filename[40] = {0};
+    int frequencyAppearances[VALUES] = {0}; // 0-a 1-b ... 25-z
+    char currentChar;
+    int i;
+    int maxValue;
+    char maxChar;
+    
+    printf("Enter filename: ");     // Extension, PATH...
+    scanf("%s", filename);
+
+    fp = fopen(filename, "r");
+
+    if (fp==NULL) puts("Failed to Open File");
+    else{
+        puts("--File Opened for READING-- \n");
+        
+        while ((currentChar = fgetc(fp)) != EOF)
+            if (currentChar >= 'a' && currentChar <= 'z')
+                frequencyAppearances[currentChar-'a']++;
+
+        fclose(fp);
+    } 
+
+    for (i=0; i<VALUES; i++){
+        if (frequencyAppearances[i] > maxValue){
+            maxValue = frequencyAppearances[i];
+            maxChar = i + 'a';
+        }
+    }
+
+    printf("Letter '%c' appeared the most ('%d' times) \n", maxChar, maxValue);
+
+    return 0;
+}
+```
+
+<details>
+<summary>@Vlad's</summary>
+
+```c
+#include <stdio.h>
+#define VALUES 26
+
+int main(){
+
+    FILE* fp;
+    char filename[40] = {0};
+    int frequencyAppearances[VALUES] = {0}; // 0-a 1-b ... 25-z
+    char currentChar;
+    int i;
+    int maxIndex;
+    
+    printf("Enter filename: ");     // Extension, PATH...
+    scanf("%s", filename);
+
+    fp = fopen(filename, "r");
+
+    if (fp==NULL) puts("Failed to Open File");
+    else{
+        puts("--File Opened for READING-- \n");
+        
+        while ((currentChar = fgetc(fp)) != EOF)
+            if (currentChar >= 'a' && currentChar <= 'z')
+                frequencyAppearances[currentChar-'a']++;
+
+        fclose(fp);
+    } 
+
+    for (i=0; i<VALUES; i++)
+        if (frequencyAppearances[i] > frequencyAppearances[maxIndex])
+            maxIndex = i;
+
+    printf("Letter '%c' appeared the most ('%d' times) \n", maxIndex + 'a', frequencyAppearances[maxIndex]);
+
+    return 0;
+}
+```
+</details>
+
+
+</details>
+
+
+## 9.6 Linked Lists
+
+<details>
+<summary>Details</summary>
+
+### Creating a Linked List
+### Count of Nodes in a List
+### How to use bool Data Types?
+### Finding an Element within a List
+### Count the number of values in a List
 
 </details>
