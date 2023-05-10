@@ -2057,10 +2057,74 @@ int main(){
 
 ## 9.6 Linked Lists
 
+> **Dynamic memory allocation...**
+
 <details>
 <summary>Details</summary>
 
 ### Creating a Linked List
+
+- Write a function that creates a Linked List.
+- Receive numbers as input from the user
+- Every received number should be added to the end of the list
+- The "stopping condition" is input == -1
+- Return the new list
+
+> We don't use ARRAY because we don't know its 'SIZE' beforehand
+
+```c
+#include <stdio.h>
+#define SIZE 20
+
+
+typedef struct node{
+    int data;
+    struct node *next;
+}Node;
+
+
+Node *createListOfNumbers(){
+
+    Node *head; // Always keep the 'head' of the linked list
+    Node *cur_node;
+
+    int num;
+
+    printf("Please enter a num or '-1' to finish" );
+    scanf("%d", &num);
+
+    if (-1 == num) return NULL;
+
+    head = (Node*)malloc(sizeof(Node));
+    cur_node = head;
+    cur_node -> data = num;
+
+    printf("Please enter a num or '-1' to finish" );
+    scanf("%d", &num);
+
+    while (-1 != num){
+        cur_node -> next = (Node*)malloc(sizeof(Node));
+        cur_node = cur_node->next;
+        cur_node -> data = num;
+        printf("Please enter a num or '-1' to finish" );
+        scanf("%d", &num);
+    }
+
+    cur_node -> next = NULL;
+    return head;    // Address of first node in this list
+}
+
+
+int main(){
+
+    puts("Sup dawg");
+
+    return 0;
+}
+```
+
+> - [ ] `malloc()` [info](https://www.tutorialspoint.com/c_standard_library/c_function_malloc.htm)
+
 ### Count of Nodes in a List
 ### How to use bool Data Types?
 ### Finding an Element within a List

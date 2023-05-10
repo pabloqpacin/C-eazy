@@ -2,7 +2,42 @@
 
 > skip to [practicals #4](#practicals-4)
 
+<details>
+<summary>Table of Contents</summary>
+
+- [4. Loops - For, While and Do-While](#4-loops---for-while-and-do-while)
+  - [Introduction](#introduction)
+  - [**While Loops**](#while-loops)
+    - [Challenge #1 - Printing any number of asterisks](#challenge-1---printing-any-number-of-asterisks)
+    - [Challenge #2 - Adding Pow to Calculator!](#challenge-2---adding-pow-to-calculator)
+    - [Milestone #1 - Coolest Average Grade Calculator](#milestone-1---coolest-average-grade-calculator)
+  - [**Do-While Loops**](#do-while-loops)
+    - [Challenge #3 - Enter a legal grade!](#challenge-3---enter-a-legal-grade)
+  - [**For Loops** ](#for-loops-)
+    - [Challenge #4 - Adding POW (using For Loops)](#challenge-4---adding-pow-using-for-loops)
+    - [Challenge #5 - Punishment!](#challenge-5---punishment)
+  - [**Nested Loops**](#nested-loops)
+    - [Challenge #6a - Print Right Angle Triangle Pattern \[1/2\]](#challenge-6a---print-right-angle-triangle-pattern-12)
+    - [Challenge #6b - Print Right Angle Triangle Pattern \[2/2\]](#challenge-6b---print-right-angle-triangle-pattern-22)
+    - [Milestone #2 - 1 Cent VS 1 Million Dollars!!](#milestone-2---1-cent-vs-1-million-dollars)
+  - [Practicals #4](#practicals-4)
+    - [1. Print from 1 to num and viceversa](#1-print-from-1-to-num-and-viceversa)
+    - [2. Print the sum of all numbers from 1 to num](#2-print-the-sum-of-all-numbers-from-1-to-num)
+    - [3. Print the Multiplication Table of a number](#3-print-the-multiplication-table-of-a-number)
+    - [4. Print n even natural numbers](#4-print-n-even-natural-numbers)
+    - [5. Print Pyramid Numbers Pattern](#5-print-pyramid-numbers-pattern)
+    - [6. Print Sum of Values Divisible by 3 AND 5](#6-print-sum-of-values-divisible-by-3-and-5)
+    - [7. Print Sum of Values Divisible by 3 OR 5](#7-print-sum-of-values-divisible-by-3-or-5)
+    - [8. Very Ascending or Not](#8-very-ascending-or-not)
+    - [*9*. Subtracting EvenDigitSum and OddDigitSum](#9-subtracting-evendigitsum-and-odddigitsum)
+    - [*10*. Sum of Odd Numbers Sequence](#10-sum-of-odd-numbers-sequence)
+
+</details>
+
 ## Introduction
+
+<details>
+<summary>Intro</summary>
 
 - iterations VS scripted sequence
 - section contents
@@ -43,7 +78,12 @@ int main(){
 }
 -->
 
+</details>
+
 ## **While Loops**
+
+<details>
+<summary>Demo</summary>
 
 Structure
 - `while`
@@ -74,6 +114,7 @@ int main(){
 }
 ```
 
+</details>
 
 ### Challenge #1 - Printing any number of asterisks
 
@@ -208,9 +249,12 @@ int main()
 
 ## **Do-While Loops**
 
-> use to AVOID DUPLICATION!!
+<details>
+<summary>Demo</summary>
+
+> Use to AVOID DUPLICATION!!
 > 
-> use Do-While loops if there will commands executed both *before* and *during* the loop
+> Use `Do-While` loops if there will commands executed both *before* and *during* the loop
 
 ```c
 // WHILE LOOP!
@@ -252,6 +296,7 @@ int main()
 }
 ```
 
+</details>
 
 ### Challenge #3 - Enter a legal grade!
 
@@ -280,6 +325,9 @@ int main(){
 > Bash `until` loops vibes...
 
 ## **For Loops** <!--countin loops-->
+
+<details>
+<summary>Demo</summary>
 
 structure
 - specify "For" statement
@@ -321,6 +369,7 @@ int main()
 
 <!-- SUPER AVOID REPETITION DAWG -->
 
+</details>
 
 ### Challenge #4 - Adding POW (using For Loops)
 
