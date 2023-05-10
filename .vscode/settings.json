@@ -1,9 +1,9 @@
 {
+    "cmake.configureOnOpen": true,
+    "editor.rulers": [
+        80
+    ],
     "files.associations": {
-        "stdio.h": "c"
+        "ostream": "cpp"
     }
-    ,"editor.rulers": [
-        80,
-        120
-    ]
 }

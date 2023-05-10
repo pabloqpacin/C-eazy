@@ -2,16 +2,18 @@
     "tasks": [
         {
             "type": "cppbuild",
-            "label": "C/C++: gcc-11 build active file",
-            "command": "/usr/bin/gcc-11",
+            "label": "C/C++: g++ build active file",
+            "command": "/usr/bin/g++",
             "args": [
                 "-fdiagnostics-color=always",
                 "-g",
                 "${file}",
                 "-o",
                 "${fileDirname}/${fileBasenameNoExtension}",
-                "-lm",  // src: https://stackoverflow.com/questions/10409032/why-am-i-getting-undefined-reference-to-sqrt-error-even-though-i-include-math
-                "-ftime-report" // src: https://stackoverflow.com/questions/3025443/how-to-calculate-gcc-compilation-time
+                "-ftime-report", // src: https://stackoverflow.com/questions/3025443/how-to-calculate-gcc-compilation-time
+                "-Wall",
+                "-Wextra",
+                "-Wuninitialized"
             ],
             "options": {
                 "cwd": "${fileDirname}"
