@@ -409,3 +409,8 @@ int main()
   - see [ChatGPT take](/3-Conditions/readme.md#chatgpt-on-if-statements) on **if-statements**
 - switch-casez
 - loopz
+
+
+---
+
+- [9.1 Structs > `sizeof` operator](https://www.geeksforgeeks.org/sizeof-operator-c/)
