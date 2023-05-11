@@ -4,30 +4,47 @@
 <summary>Table of Contents</summary>
 
 - [Cpp Wiki](#cpp-wiki)
-  - [syntax (Section 2)](#syntax-section-2)
-    - [keywords](#keywords)
-    - [identifiers](#identifiers)
-    - [operators](#operators)
-    - [punctuation](#punctuation)
-  - [...datatypes](#datatypes)
-  - [special features](#special-features)
-    - [preprocessor directives](#preprocessor-directives)
-    - [libraries](#libraries)
+  - [1. Syntax](#1-syntax)
+    - [Keywords](#keywords)
+    - [Identifiers](#identifiers)
+    - [Operators](#operators)
+    - [Punctuation](#punctuation)
+  - [2. Datatypes](#2-datatypes)
+    - [Primitive Datatypes](#primitive-datatypes)
+      - [Character](#character)
+      - [Integer](#integer)
+      - [Floating-point](#floating-point)
+      - [Boolean](#boolean)
+  - [3. Constants](#3-constants)
+    - [Literal Constants](#literal-constants)
+      - [Integer Literal Constants](#integer-literal-constants)
+      - [Floating-point Literal Constants](#floating-point-literal-constants)
+      - [Character Literal Constants (escape code)](#character-literal-constants-escape-code)
+    - [Declared Constants](#declared-constants)
+    - [Constant Expressions](#constant-expressions)
+    - [Emumerated Constants](#emumerated-constants)
+    - [Defined Constants](#defined-constants)
+  - [n. SPECIAL FEATURES](#n-special-features)
+    - [Preprocessor Directives](#preprocessor-directives)
+    - [Libraries - Header files](#libraries---header-files)
 
 </details>
 
-## syntax (Section 2)
+<hr>
 
-### [keywords](https://en.cppreference.com/w/cpp/keyword)
+## 1. Syntax
+
+### [Keywords](https://en.cppreference.com/w/cpp/keyword)
 
 | keyword | info
 | ---     | ---
 | int
 | return
 | double
+| ...
 
 
-### identifiers
+### Identifiers
 
 <!-- EG. #include, main, std, cout, cin, endl... -->
 
@@ -40,7 +57,7 @@
 | endl       | endline stream manipulator, newline + flush stream buffer
 | flush      | flush only, cout.flush()
 
-### operators
+### Operators
 
 | operator | info
 | ---      | ---
@@ -51,8 +68,10 @@
 | <<       | stream insertion <!--chevron-->
 | >>       | stream extraction
 | ::       | scope resolution (!)
+|          |
+| sizeof() | queries object bit size
 
-### punctuation
+### Punctuation
 
 | punctuation | info
 | ---         | ---
@@ -62,22 +81,122 @@
 | ' '         | delimit chars
 | ( )
 
-## ...datatypes
+<hr>
 
-| datatype | info
+## 2. Datatypes
+
+| size (bits) | representable values       | power
+| ---         | ---                        | ---
+| 8           | 256                        | 2**8
+| 16          | 65,536                     | 2**16
+| 32          | 4,294,967,296              | 2**32
+| 64          | 18,446,744,073,709,551,615 | 2**64
+
+### Primitive Datatypes
+
+#### Character
+
+> Unicode...
+
+| type     | info
 | ---      | ---
-| int
-| double
+| char     | 1 byte, at least 8 bits
+| char16_t | At least 16 bits
+| char32_t | At least 32 bits
+| wchar_t  | Can represent the largest available character set
 
-## special features
+#### Integer
 
-### [preprocessor directives](https://cplusplus.com/doc/tutorial/preprocessor/)
+> signed/unsigned
+
+| type                           | info
+| ---                            | ---
+| signed\|unsigned short int     | At least 16 bit
+| signed\|unsigned int           | At least 16 bit
+| signed\|unsigned long int      | At least 32 bit
+| signed\|unsigned long long int | At least 64 bit
+
+#### Floating-point
+
+> represented by mantissa and exponent (scientific notation)
+> precision and size are compiler-dependent
+
+| type        | info              | typical range
+| ---         | ---               | ---
+| float       | 7 decimal digits  | 1.2x10**-38 to 3.4x10**38
+| double      | 15 decimal digits | 2.2x10**-308 to 1.8x10**308
+| long double | 19 decimal digits | 3.3x10**-4932 to 1.2x10**4932
+
+#### Boolean
+
+> true/false = 0 is false, non-zero is true
+> used to know if something changes state (gameOver, keyPressed...)
+
+| type | info
+| ---  | ---
+| bool | usually 8 bits, true/false
+
+<hr>
+
+## 3. Constants
+
+### Literal Constants
+
+#### Integer Literal Constants
+
+| literal | info
+| ---     | ---
+| 12      | int
+| 12U     | unsigned int
+| 12L     | long int
+| 12LL    | long long int
+
+#### Floating-point Literal Constants
+
+| literal | info
+| ---     | ---
+| 12.1    | double
+| 12.1F   | float
+| 12.1L   | long double
+
+#### Character Literal Constants (escape code)
+
+| literal | info
+| ---     | ---
+| \n      | newline
+| \r      | return
+| \t      | tab
+| \b      | backspace
+| \'      | single quote
+| \"      | double quote
+| \\      | backslash
+
+### Declared Constants
+
+> `const keyword`
+
+### Constant Expressions
+
+> `constexpr keyword`
+
+### Emumerated Constants
+
+> `enum keyword`
+
+### Defined Constants
+
+> `#define keyword`
+
+
+## n. SPECIAL FEATURES
+
+### [Preprocessor Directives](https://cplusplus.com/doc/tutorial/preprocessor/)
 
 | directive | info
 | ---       | ---
 | #include
 
-### libraries
+### Libraries - Header files
 
 - `iostream`
 
@@ -165,3 +284,6 @@
   78   │
   79   │ #endif /* _GLIBCXX_IOSTREAM */
 ```
+
+- `climits`
+- `cfloat`

@@ -13,7 +13,8 @@
                 "-ftime-report", // src: https://stackoverflow.com/questions/3025443/how-to-calculate-gcc-compilation-time
                 "-Wall",
                 "-Wextra",
-                "-Wuninitialized"
+                "-Wuninitialized",
+                // "-Werror"
             ],
             "options": {
                 "cwd": "${fileDirname}"

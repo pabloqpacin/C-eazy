@@ -7,7 +7,6 @@
   - [1. Getting Started](#1-getting-started)
   - [2. Structure of a C++ Program](#2-structure-of-a-c-program)
   - [3. Variables and Constants](#3-variables-and-constants)
-  - [3. Variables and Constants](#3-variables-and-constants-1)
   - [4. Arrays and Vectors](#4-arrays-and-vectors)
   - [5. Statements and Operators](#5-statements-and-operators)
   - [6. Controlling Program Flow](#6-controlling-program-flow)
@@ -30,7 +29,6 @@
 ## 1. Getting Started
 
 - Writing our first program
-  - [ ] compilation: 0 errors, 0 warnings, cpp version..., `.o` files
 ```cpp
 #include <iostream>
 
@@ -43,6 +41,7 @@ int main(){
 }
 ```
 - Building our first program
+  - [ ] compilation: 0 errors 0 warnings, cpp version..., `.o` files...
   - @VSCode: [Using C++ and WSL in VS Code](https://code.visualstudio.com/docs/cpp/config-wsl) (zCustom)
     - @GNU: [GCC Warning options](https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html)
   - **build**: compile + link external libraries/files + create executable
@@ -226,18 +225,118 @@ int main(){
 ## 3. Variables and Constants
 
 - What is a variable?
+  - abstraction for a memory location, where data is stored; they have type & value
+  - must be declared before they are used, and their value might change
 - Declaring and Initializing Variables
+  - can contain letters, numbers and underscores - must begin with letter or underscore (NO number)
+  - cannot use Cpp reserved keywords, cannot redeclare a name in the same scope (remember Cpp is case-sensitive)
+  - consistent naming conventions, meaningful names
+  - declare and initialize them (LOCAL VARIABLES) close to their usecase, NOT atop
+```cpp
+    int age = 69;               // C-like initialization
+    double rate (4.20);         // Constructor initialization
+    string name {"supdawg"};    // C++11 list initialization syntax
+```
+```cpp
+#include <iostream>
+using namespace std;
+
+int main(){
+    cout << "Enter the width of the room: ";
+    double room_width {0};
+    cin >> room_width;
+    cout << "Enter the length of the room: ";
+    double room_length {0};
+    cin >> room_length;
+    cout << "The area of the room is " << room_width * room_length << endl;
+    return 0;
+}
+```
 - EXERCISE
 - Global Variables
+  - declared outside of functions, to be used in any part of the code
+  - scope, visibility...
+  - compiler first looks for LOCAL variables, then GLOBAL variables
+```cpp
+#include <iostream>
+using namespace std;
+
+int age {24};
+
+int global_variable(){
+    return age;
+}
+
+int main(){
+    int age {28};
+    cout << age << endl;                // Prints 28
+    cout << global_variable() << endl;  // Prints 24
+    return 0;
+}
+```
 - C++ Built-in Primitive Types
+  - types: character, integer (signed/unsigned),  floating-point types, boolean type
+  - size and precision: machine/compiler-dependent (`#include <climits>`); the more bits the more unique values can be represented and more storage is required; mind *overflows*
+```cpp
+#include <iostream>
+using namespace std;
+
+int main(){
+    char middle_initial {'Q'};
+    cout << "My middle initial is " << middle_initial << endl;
+
+    unsigned short int exam_score {55};
+    cout << "My exam score was " << exam_score << endl;
+
+    int countries_represented {65};
+    cout << "There were " << countries_represented
+         << " countries represented in my meeting" << endl;
+
+    long people_in_spain {47'615'034};
+    cout << "There are about " << people_in_spain << " people in Spain" << endl;
+
+    float car_payment {420.69};
+    cout << "My car payment is " << car_payment << endl;
+
+    double pi {3.14159};
+    cout << "Pi is " << pi << endl;
+
+    long double large_amount {2.7e120}; // 2.7x10**120
+    cout << large_amount << " is a very big number" << endl;
+
+    bool game_over {false};
+    cout << "The value of gameOver is " << game_over << endl;
+
+    return 0;
+}
+```
 - What is the Size of a Variable (`sizeof`)
+  - for datatypes/variables
+  - NOTE: `<climits>` & `<cfloat>`
 - What is a Constant?
+  - like Cpp variables: have names, occupy storage, are usually 'typed'
+  - however: their value cannot change once declared
+  - types:
+    - literal constants: -
+    - declared constants: `const keyword`
+    - constant expressions: `constexpr keyword`
+    - enumerated constants: `enum keyword`
+    - defined constants: `#define foo "bar"` (AVOID)
 - Declaring and Using Constants
 - SECTION CHALLENGE
 - SECTION QUIZ
+  1. Data values that do not change while a program executes are *literals*.
+  2. All variables must have a *definition* before they are used in a program.
+  3. Storage locations in memory are represented by *variables*.
+  4. String literals are always enclosed in *double quotes ""*.
+  5. Character literals are always enclosed in *single quotes ''*.
+  6. A variable that can hold only true or false values is of type *bool*.
+  7. The following expression determines how many bytes of storage are required to store a double on your computer: *`sizeof(double)`*
+  8. What is the output from the following code: `int x; cout << x << endl;` *some garbage value*
+  9. Which variable definition is not legal in C++? *`int x = 100`*
+  10. Which line in the following code will generate a compiler error? *—*
 
 
-## 3. Variables and Constants
 ## 4. Arrays and Vectors
 ## 5. Statements and Operators
 ## 6. Controlling Program Flow
