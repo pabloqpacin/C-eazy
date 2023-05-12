@@ -26,6 +26,8 @@
     - [Defined Constants](#defined-constants)
   - [n. SPECIAL FEATURES](#n-special-features)
     - [Preprocessor Directives](#preprocessor-directives)
+  - [4. ...OOP](#4-oop)
+    - [...METHODS](#methods)
     - [Libraries - Header files](#libraries---header-files)
 
 </details>
@@ -70,6 +72,7 @@
 | ::       | scope resolution (!)
 |          |
 | sizeof() | queries object bit size
+| .        | object.method
 
 ### Punctuation
 
@@ -80,6 +83,7 @@
 | " "         | delimit string
 | ' '         | delimit chars
 | ( )
+| < >         | contain objects/classes ?
 
 <hr>
 
@@ -196,9 +200,18 @@
 | ---       | ---
 | #include
 
+## 4. ...OOP
+
+### ...METHODS
+
+- vector.at(element) == arr[i]
+  - object.method(index)
+- vector.push_back(element)
+- vector.size()
+
 ### Libraries - Header files
 
-- `iostream`
+- `<iostream>`
 
 ```cpp
 ───────┬────────────────────────────────────────────────────────────────────────────────────────
@@ -285,5 +298,8 @@
   79   │ #endif /* _GLIBCXX_IOSTREAM */
 ```
 
-- `climits`
-- `cfloat`
+- `<climits>`
+- `<cfloat>`
+
+- [ ] Standard Template Library
+  - [ ] `<vector>`

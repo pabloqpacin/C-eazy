@@ -338,6 +338,206 @@ int main(){
 
 
 ## 4. Arrays and Vectors
+
+- What is an Array?
+  - compound **data type/structure**: collection of elements of the same type
+  - FIXED size, stored contiguosly in memory
+  - each element can be accessed directly by position/index; first is 0 & last is -1
+  - 'no checking if you are out of bounds'
+  - very efficient; iteration (looping) is often used to process
+- Declaring and Initializing Arrays
+```cpp
+#include <iostream>
+using namespace std;
+
+int main(){
+    // int i {0};
+    int test_scores [3] {1,2,3};
+    // for (i=0; i<3; i++){
+    //     cout << test_scores[i] << endl;
+    // }
+    const int days_in_year {365};
+    double high_temperatures [days_in_year] {0};
+    // for (i=0; i<days_in_year; i++){
+    //     cout << high_temperatures[i] + i << endl;
+    // }
+    int another_array [] {1,2,3};   // Compiler determines size based on elements
+    // for (i=0; i<another_array[-1]; i++){
+    //     cout << another_array[i] << endl;
+    // }
+    // int test_score_1 {0};    // CAN'T BE DONE - NEED ARRAY/VECTOR
+    // int test_score_2 {0};
+    // int test_score_666 {0};
+    // for (i=0;i<2;i++){
+    //     int test_score_"i";
+    // }
+    return 0;
+}
+```
+- Accessing and Modifying Array Elements
+  - NOTE: consider `int array [] {1,2,3}`: as `array[0]` is in the memory address 1000, `array[1]` will be found with 1000+4 (int byte size), etc
+```cpp
+#include <iostream>
+using namespace std;
+
+int main(){
+
+    int int_array [5] {};   // '[]' here would cause *stack smashing*
+    cout << "- " << int_array << " // Enter 3 integers separated with spaces: ";
+    cin >> int_array[0];
+    cin >> int_array[1];
+    cin >> int_array[2];
+    cout << "First integer is: " << int_array[0] << endl;
+    cout << "Second integer is: " << int_array[1] << endl;
+    cout << "Third integer is: " << int_array[2] << endl;
+
+    char vowels [] {'a','e','i','o','u'};
+    cout << "\n- " << static_cast<void*>(vowels) << endl;
+    // cout << vowels;  // Since chars, prints string until \O (null char)
+    cout << "First vowel is: " << vowels[0] << endl;
+    cout << "Last vowel is: " << vowels[4] << endl;
+    // cin >> vowels[5]; // *STACK SMASHING*
+
+    double high_temps [] {12.1,21.2};
+    cout << "\n- " << high_temps << endl;
+    cout << "First high temperature is: " << high_temps[0] << endl;
+    high_temps[0] = 6.9;
+    cout << "First high temperature is now: " << high_temps[0] << endl;
+    
+    return 0;
+}
+```
+- EXERCISE
+- Multidimensional Arrays
+  - Squre brackets MUST NOT be empty now
+```cpp
+#include <iostream>
+using namespace std;
+
+int main(){
+    // int movie_rating [3][4]{};
+    const int rows {3}; // 3 reviewers
+    const int cols {4}; // 4 movies
+    // int movie_rating [rows][cols] {};
+    // cin >> movie_rating [1][2];
+    // cout << movie_rating [1][2];
+    int movie_rating [rows][cols] {
+        {0,4,3,5},
+        {2,3,3,5},
+        {1,4,4,5}
+    };
+    cout << movie_rating [1][2];
+    return 0;
+}
+```
+- What is a Vector?
+  - container in the Standard Template Library
+  - dynamic array (OBJECT) that can grow and shrink at runtime
+  - similar semantics and syntax as arrays (same type/elements), very efficient, provides 'bounds checking'
+  - allows for many functions like sort, reverse, find and more
+- Declaring and Initializing Vectors (Dynamic Arrays)
+```cpp
+#include <iostream>
+#include <vector>
+using namespace std;
+
+int main(){
+    // Declare 5 elements initialized as 0 by default
+    vector <char> vowels (5);
+    // Implicit size declaration, explicit initialization
+    vector <int> test_scores {100,98,89,85,92};
+    // Size declaration, initialization for each and every element!
+    vector <double> high_temperatures (365, 80.0);
+    return 0;
+}
+```
+- Accessing and Modifying Vector Elements
+  - methods will be bounds-checked!! (ie. `.at()`...)
+  - if out of bounds: **exception** and error message generated (runtime interrupted)
+```cpp
+#include <iostream>
+#include <vector>
+using namespace std;
+
+int main(){
+    vector <int> test_scores {100,95,99,87,88};
+    cout << "First score at index 0: " << test_scores[0] << endl;
+    cout << "Last score at index 4: " << test_scores.at(4) << endl;
+
+    cin >> test_scores.at(4);
+    cout << "New last score at index 4: " << test_scores.at(4) << endl;
+    test_scores.at(4) = 69;
+    cout << "New-new last score at index 4: " << test_scores.at(4) << endl;
+    
+    // cin >> test_scores[5];
+    // cout << "New score at index 5: " << test_scores[5] << endl;
+    test_scores.push_back(44);  // Only 1 element at a time
+    cout << "Index 5 after push_back: " << test_scores.at(5) << endl;
+    
+    return 0;
+}
+```
+```cpp
+#include <iostream>
+#include <vector>
+using namespace std;
+
+int main(){
+    // vector <char> vowels;    // Empty vector
+    // vector <char> vowels (5);   // 5 elements all initialized to zero
+    // vector <char> vowels (5, 'y');   // 5 elements all initialized to 'y'
+    vector <char> vowels {'a','e','i','o','u'};
+    cout << vowels[0] << endl;
+    cout << vowels.at(4) << endl;
+    // cout << sizeof vowels << endl;
+    cout << "There are " << vowels.size() << " vowels in the vector" << endl;
+
+    // cout << "Redo the first vowel... ";
+    // cin >> vowels.at(0);
+    // cout << vowels[0] << endl;
+
+    cout << "Enter a fake vowel: " << endl;
+    char fake_vowel {0};
+    cin >> fake_vowel;
+    vowels.push_back(fake_vowel);
+    cout << "Now there are " << vowels.size() << " vowels in the vector" << endl;
+    return 0;
+}
+```
+```cpp
+#include <iostream>
+#include <vector>
+using namespace std;
+
+int main(){
+    vector <vector<int>> movie_ratings {
+        {1,2,3,4},
+        {1,2,4,4},
+        {1,3,4,5}
+    };
+    cout << "Movie ratings by reviewer #1:" << endl;
+    cout << movie_ratings[0][0] << endl;
+    cout << movie_ratings[0][1] << endl;
+    cout << movie_ratings.at(0).at(2) << endl;
+    cout << movie_ratings.at(0).at(3) << endl;
+    return 0;
+}
+```
+- EXERCISE
+- SECTION CHALLENGE
+- SECTION QUIZ
+  1.  Arrays are always indexed starting at subscript *0*.
+  2.  How many integers can the array named numbers contain? `int numbers[10];` *10*
+  3.  Which of the following is a legal array definition in C++? *`float numbers[10]`*
+  4.  C++ treats an array name as: *the location in memory of first array element*
+  5.  All array elements must be: *of the same type*
+  6.  Given the following array declaration, how would you display `100.7` from the array? `double temperatures[] = {98.6, 95.2, 88.7, 100.7, 89.0};` *`cout << temperatures[3] << endl;`*
+  7.  Given the following array declaration, what would the following code display? `double temperatures[] {98.6, 95.2, 88.7, 100.7, 89.0}; cout << temperatures[5] << endl;` *garbage data* <!--NOT it won't compile, out-of-range error-->
+  8.  How would you define a vector named temperatures that contains doubles? *`vector <double> temperatures;`*
+  9. How would you determine the number of elements contained in a vector named temperatures? *`temperatures.size()`* <!--NOT lenght() num_elements()-->
+  10. What is one way that vectors and arrays are different? *vectors can vary their capacity as the program runs, but arrays are fixed in size*
+
+
 ## 5. Statements and Operators
 ## 6. Controlling Program Flow
 ## 7. Characters and Strings
