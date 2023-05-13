@@ -1,9 +1,11 @@
-# Cpp Course Contents
+# Cpp Bootcamp
+
+> @FrankMitropoulos: [Beginning C++ Programming - From Beginner to Beyond](https://www.udemy.com/course/beginning-c-plus-plus-programming/)
 
 <details>
 <summary>Table of Contents</summary>
 
-- [Cpp Course Contents](#cpp-course-contents)
+- [Cpp Bootcamp](#cpp-bootcamp)
   - [1. Getting Started](#1-getting-started)
   - [2. Structure of a C++ Program](#2-structure-of-a-c-program)
   - [3. Variables and Constants](#3-variables-and-constants)
@@ -539,6 +541,254 @@ int main(){
 
 
 ## 5. Statements and Operators
+
+- Expressions and Statements
+  - EXPRESSION
+    - building block of a program
+    - "sequence of operators and operands that specifies a computation"
+    - computes a value from a number of operands
+  - STATEMENT
+    - complete line of code that performs some action
+    - usually terminated with a semi-colon
+    - usually contains expressions
+    - Cpp has many types: expression, null, compound, selection, iteration, declaration, jump, try-blocks...
+```cpp
+// EXPRESSIONS
+34              // literal
+favorite_number // variable
+1.5 + 2.8       // addition
+2 * 5           // multiplication
+a > b           // relational - evaluates to a BOOl
+a = b           // assignment
+
+// STATEMENTS
+int x;                                      // declaration
+favorite_number = 12;                       // assignment
+1.5 + 2.8;                                  // expression
+x = 2 * 5;                                  // assignment
+if (a > b) cout << "a is greater than be";  // if statement
+;                                           // null statement
+```
+- Using Operators
+  - rich set: unary, binary, ternary
+  - common groups: assignment, arithmetic, increment/decrement, relational, logical, member access, other
+- The Assignment Operator (`=`)
+  - for `lhs = rhs;`
+    - `rhs` is an expression that is evaluated to a value that is stored to `lhs`
+    - `lhs` must be assignable and the value/type of `rhs` must be compatible (STATICALLY TYPED)
+    - assignment expression is evaluated to what was just assigned; more than one variable can be assigned in a single statement
+```cpp
+// Assignment Operator (=)
+int num1 {10};
+int num2 {20};
+// num1 = 100;
+// num1 = num2;
+num1 = num2 = 1000;
+cout << "num1 is " << num1 << endl;
+cout << "num2 is " << num2 << endl;
+```
+- Arithmetic Operators: `+ - * / %`
+```cpp
+// Arithmetic Operators (+ - * / %)
+int num1 {200};
+int num2 {100};
+int result {0};
+result = num1 + num2;
+result = num1 - num2;
+result = num1 * num2;
+result = num1 / num2;
+result = num1 % num2;
+cout << num1 << " % " << num2 << " = " << result << endl;
+
+const double usd_per_eur {1.08};
+cout << "\nWelcome to the EUR to USD converter" << endl;
+cout << "Enter the value in EUR: ";
+double euros {0.0};
+double dollars {0.0};
+cin >> euros;
+dollars = euros * usd_per_eur;
+cout << euros << " euros is equivalent to " << dollars << " dollars" << endl;
+```
+- EXERCISES
+  - Using the Assignment Operator
+  - Using the Arithmetic Operators
+- Increment and Decrement Operators: `++ --`
+  - can be used with integers, floating point types and pointers
+  - prefix & suffix: `++num` & `num++`
+  - don't overuse this operator! Never use it twice for the same variable in the same statement!
+```cpp
+int counter {10};
+int result {0};
+cout << "Counter: " << counter << endl; // 10
+counter = counter + 1;
+cout << "Counter: " << counter << endl; // 11
+counter++;
+cout << "Counter: " << counter << endl; // 12
+++counter;
+cout << "Counter: " << counter << endl; // 13
+
+// Counter will be pre-incremented (BEFORE it's used)
+counter = 10;
+result = 0;
+result = ++counter;
+cout << "Counter: " << counter << endl; // 11
+cout << "Result: " << result << endl;   // 11
+result = ++counter;
+cout << "Counter: " << counter << endl; // 12
+cout << "Result: " << result << endl;   // 12
+
+// Counter will be post-incremented (AFTER it's used)
+counter = 10;
+result = 0;
+result = counter++;
+cout << "Counter: " << counter << endl; // 11
+cout << "Result: " << result << endl;   // 10
+result = counter++;
+cout << "Counter: " << counter << endl; // 12
+cout << "Result: " << result << endl;   // 11
+```
+- Mixed Expressions and Conversions
+  - INTRO
+    - Cpp operations occur on same type operands; if different type, Cpp will convert one (importantly, this can affect calculation results)
+    - Cpp will attempt to automatically convert types (coercion); if it can't a compiler error will occur
+    - TYPES: lower & higher: can hold smaller/larger values; lower types can be converted into higher types
+    - type coercion: conversion of one operand to another data type: promotion & demotion: convertion to higher/lower type: mathematical expressions | assignment to lower type
+  - CASTING
+    - explicit type casting - `static_cast<type>(var)`
+```cpp
+// Promotion (int to double)
+2 * 5.2;
+// Demotion (double to int)
+int num {0};
+num = 100.2;
+cout << num << endl;
+```
+```cpp
+#include <iostream>
+using namespace std;
+
+int main(){
+    int total {0};
+    int num1 {0}, num2 {0}, num3 {0};
+    const int count {3};
+    cout << "Enter 3 integers separated by spaces: ";
+    cin >> num1 >> num2 >> num3;
+    total = num1 + num2 + num3;
+    double average {0.0};
+    average = static_cast<double>(total) / count;
+    // average = (double)total / count; // C-like casting
+    cout << "The three numbers are: " << num1 << " " << num2 << " " << num3 << endl;
+    cout << "Total is: " << total << endl;
+    cout << "Average is: " << average << endl;
+    return 0;
+}
+```
+- Testing for Equality: `== !=`
+  - compares the values of 2 expressions
+  - evaluates to a Boolean (True or False, 1 or 0)
+  - mind `boolalpha`!
+```cpp
+#include <iostream>
+using std::cin, std::cout, std::endl;
+using std::boolalpha, std::noboolalpha;
+
+int main(){
+    bool equal_result {false};
+    bool not_equal_result {false};
+
+    cout << boolalpha;  // defaults booleans to true/false
+    int num1{}, num2{};
+    cout << "Enter two integers separated by a space: ";
+    // cin >> num1 >> num2;
+    cout << 10 << " 9.99999" << endl;
+    num1 = 10; num2 = 9.9999999999999999;
+    equal_result = (num1 == num2);
+    not_equal_result = (num1 != num2);
+    cout << "Comparison result (equals): " << equal_result << endl;
+    cout << "Comparison result (not equals): " << not_equal_result << endl;
+
+    cout << noboolalpha;    // defaults booleans to 1/0
+    char char1{}, char2{};
+    cout << "\nEnter two characters separated by a space: ";
+    cin >> char1 >> char2;
+    equal_result = (char1 == char2);
+    not_equal_result = (char1 != char2);
+    cout << "Comparison result (equals): " << equal_result << endl;
+    cout << "Comparison result (not equals): " << not_equal_result << endl;
+    return 0;
+}
+```
+- Relational Operators: `> >= < <= <=>`
+  - also evaluate to a Boolean...
+```cpp
+int num{};
+const int lower{10}, upper{20};
+cout << boolalpha;
+
+cout << "Enter an integer that is greater than " << lower << ": ";
+cin >> num;
+cout << num << " > " << lower << " is " << (num > lower) << endl;
+
+cout << "Enter an integer that is less than or equal to " << upper << ": ";
+cin >> num;
+cout << num << " <= " << upper << " is " << (num <= lower) << endl;
+```
+- Logical Operators: `! && ||`
+  - precedence: `not` higher than `and` higher than `or`
+  - short-circuit evaluation: "when evaluating a logical expression C++ stops as soon as the result is known"
+    - `expr1 && expr2 && expr3` will stop as soon as one is false! 
+    - `expr1 || expr2 || expr3` will stop as soon as one is true!
+```cpp
+int num {};
+const int lower {10};
+const int upper {20};
+cout << "Enter an integer - the bounds are " << lower << " and " << upper << ": ";
+cin >> num;
+bool on_bounds {false};
+on_bounds = (num == lower || num == upper);
+cout << num << " is equal to " << lower << " or " << upper << ": " << on_bounds << endl;
+bool within_bounds {false};
+within_bounds = (num > lower && num < upper);
+cout << num << " is between " << lower << " and " << upper << ": " << within_bounds << endl;
+bool outside_bounds {false};
+outside_bounds = (num < lower || num > upper);
+cout << num << " is less than " << lower << " or greater than " << upper << ": " << outside_bounds << endl;
+
+int wint_speed {};
+double temperature {};
+bool wear_coat {false};
+const int wind_speed_for_coat {25};     // wind over this value requires a coat
+const double temperature_for_coat {45}; // temperature below this value requires a coat
+cout << "Enter the current temperature in (F): ";
+cin >> temperature;
+cout << "Enter windspeed in (mhp): ";
+cin >> wint_speed;
+wear_coat = (temperature < temperature_for_coat || wint_speed > wind_speed_for_coat);
+cout << "Do you need to wear a coat using OR? " << wear_coat << endl;
+wear_coat = (temperature < temperature_for_coat && wint_speed > wind_speed_for_coat);
+cout << "Do you need to wear a coat using AND? " << wear_coat << endl;
+```
+- Compound Assignment Operators: `+= -= *= /= %= >>= <<= &= ^= |=`
+  - `lhs = lhs op (rhs)`
+- Operator Precedence
+  - use precedence rules when adjacent operators are different
+  - use **associativity** rules when adjacent operators have the same precedence
+  - use parenthesis to absolutely remove any doubt
+- EXERCISE: Logical Operators and Operator Precedence
+- SECTION CHALLENGE
+- SECTION QUIZ
+  1. The *prefix increment* operator increments the value of its operand by one then uses the value
+  2. The operator used to test two operands for equality is *==*
+  3. The operator that represents logical AND is *&&*
+  4. The operator that represents logic OR is *||*
+  5. —
+  6. `a < 10`  is called a(n) *relational expression*
+  7. —
+  8. What is displayed by the following code? `int amount = 100; amount += amount * 2; cout << amount << endl;` *300*
+  9. What is displayed by the following code? `int x= 5; int y= -2; int z = 2; cout << (x + y * z <= x + z * z - x) << endl;` // *1*
+  10. What are the values of x and y after the following code executes? `double  a = 100; int b = 12; int x = b % 3; double  y = a / b; int z = a / b;` *x=0, y=8.33 and z=8*
+
+
 ## 6. Controlling Program Flow
 ## 7. Characters and Strings
 ## 8. Functions

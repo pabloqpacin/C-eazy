@@ -6,9 +6,11 @@
 - [Cpp Wiki](#cpp-wiki)
   - [1. Syntax](#1-syntax)
     - [Keywords](#keywords)
+    - [Punctuation](#punctuation)
     - [Identifiers](#identifiers)
     - [Operators](#operators)
-    - [Punctuation](#punctuation)
+      - [Operator Precedence](#operator-precedence)
+    - [STREAM MANIPULATORS](#stream-manipulators)
   - [2. Datatypes](#2-datatypes)
     - [Primitive Datatypes](#primitive-datatypes)
       - [Character](#character)
@@ -24,11 +26,14 @@
     - [Constant Expressions](#constant-expressions)
     - [Emumerated Constants](#emumerated-constants)
     - [Defined Constants](#defined-constants)
-  - [n. SPECIAL FEATURES](#n-special-features)
-    - [Preprocessor Directives](#preprocessor-directives)
-  - [4. ...OOP](#4-oop)
+  - [Expressions \& Statements](#expressions--statements)
+  - [n. ...OOP](#n-oop)
     - [...METHODS](#methods)
+  - [m. SPECIAL FEATURES](#m-special-features)
+    - [Preprocessor Directives](#preprocessor-directives)
     - [Libraries - Header files](#libraries---header-files)
+  - [z. APPENDIX](#z-appendix)
+    - [Boolean Algebra](#boolean-algebra)
 
 </details>
 
@@ -46,6 +51,18 @@
 | ...
 
 
+### Punctuation
+
+| punctuation | info
+| ---         | ---
+| ;           | terminate statement
+| { }   
+| " "         | delimit string
+| ' '         | delimit chars
+| ( )
+| < >         | contain objects/classes ?
+
+
 ### Identifiers
 
 <!-- EG. #include, main, std, cout, cin, endl... -->
@@ -61,29 +78,78 @@
 
 ### Operators
 
-| operator | info
-| ---      | ---
-| +
-| -
-| *
-| /
-| <<       | stream insertion <!--chevron-->
-| >>       | stream extraction
-| ::       | scope resolution (!)
-|          |
-| sizeof() | queries object bit size
-| .        | object.method
+<!-- - Member access: eg.array subscript operator -->
 
-### Punctuation
+| category   | operator | info
+| ---        | ---      | ---
+| assignment | =        | lvalue takes rvalue
+| arithmetic | +        | addition
+|            | -        | substraction
+|            | *        | multiplication
+|            | /        | division
+|            | %        | modulo/remainder (ints only)
+| increment  | ++       | increment by 1 <!--POINTERS DAWG-->
+| decrement  | --       | decrement by 1
+| equality   | ==       | equal
+|            | !=       | not equal
+| relational | >        | greater than
+|            | >=       | greater than or equal to
+|            | <        | less than
+|            | <=       | less than or equal to
+|            | <=>      | three-way comparison (C++20)
+| logical    | !  &emsp;  not   | negation
+|            | &&  &ensp;  and  | logical and
+|            | \|\|  &emsp;  or | logical or
+| compound   | +=       | lhs = lhs + (rhs);
+|            | -=       | lhs = lhs - (rhs)
+|            | *=       | lhs = lhs * (rhs)
+|            | /=       | lhs = lhs / (rhs)
+|            | %=       | lhs = lhs % (rhs)
+| bitwise... | >>=      | lhs = lhs >> (rhs)
+|            | <<=      | lhs = lhs << (rhs)
+|            | &=       | lhs = lhs & (rhs)
+|            | ^=       | lhs = lhs ^ (rhs)
+|            | \|=      | lhs = lhs \| (rhs)
+|            |          |
+| ...        | <<       | stream insertion <!--chevron-->
+|            | >>       | stream extraction
+|            | ::       | scope resolution (!)
+|            |          |
+|            | sizeof() | queries object bit size
+|            | .        | object.method
 
-| punctuation | info
+#### [Operator Precedence](https://en.cppreference.com/w/cpp/language/operator_precedence)
+
+> Precedence & Associativity
+
+| Precedence | Operator                  | Description      | Associativity  
+| :-:        | ---                       | ---              | ---            
+| 1          | ::                        | Scope resolution | Left-to-right →
+| 2          | [] <br> -> <br> . <br> () | Function calls <br> Member access | "
+| 3          | ++i <br> --i <br> not <br> -(unary) <br> *(de-ref) <br> & <br> sizeof | Prefix increment and decrement <br> Unary plus and minus <br> Logical and bitwise NOT <br> Indirection (dereference) <br> Address-of <br> Size-of | Right-to-left ←
+| 4          | 
+| 5          | a*b a/b a%b               | Multiplication, division and remainder | Left-to-right →
+| 6          | a+b a-b                   | Division and substraction | "
+| 7          | << >>                     | Bitwise left shift and right shift | "
+| 8          |
+| 9          | < <= > =>                 | Relational operators       | " 
+| 10         | == !=                     | Equality operators         | "
+| 11         | a&b                       | Bitwise AND                | "
+| 12         | ^                         | Bitwise XOR (exclusive OR) | "
+| 13         | \|                        | Bitwise OR (inclusive OR)  | "
+| 14         | &&                        | Logical AND                | "
+| 15         | \|\|                      | Logical OR                 | "
+| 16         | ?: = op=                  | Ternary conditional, Direct assignment, Compound assignment | Right-to-left ←
+| 17         | 
+
+### STREAM MANIPULATORS
+
+> ...
+
+| manipulator | info
 | ---         | ---
-| ;           | terminate statement
-| { }   
-| " "         | delimit string
-| ' '         | delimit chars
-| ( )
-| < >         | contain objects/classes ?
+| boolaplha   | sets booleans to true/false until turned off
+| noboolalpha | resets booleans to 1/0
 
 <hr>
 
@@ -191,16 +257,13 @@
 
 > `#define keyword`
 
+## Expressions & Statements
 
-## n. SPECIAL FEATURES
+... 
 
-### [Preprocessor Directives](https://cplusplus.com/doc/tutorial/preprocessor/)
 
-| directive | info
-| ---       | ---
-| #include
 
-## 4. ...OOP
+## n. ...OOP
 
 ### ...METHODS
 
@@ -208,6 +271,15 @@
   - object.method(index)
 - vector.push_back(element)
 - vector.size()
+
+
+## m. SPECIAL FEATURES
+
+### [Preprocessor Directives](https://cplusplus.com/doc/tutorial/preprocessor/)
+
+| directive | info
+| ---       | ---
+| #include
 
 ### Libraries - Header files
 
@@ -303,3 +375,28 @@
 
 - [ ] Standard Template Library
   - [ ] `<vector>`
+
+<hr>
+
+## z. APPENDIX
+
+### Boolean Algebra
+
+| expression a | not a
+| ---          | ---
+| true         | false
+| false        | true
+
+| expression a | expression b | a and b
+| ---          | ---          | ---
+| true         | true         | true
+| true         | false        | false
+| false        | true         | false
+| false        | false        | false
+
+| expression a | expression b | a or b
+| ---          | ---          | ---
+| true         | true         | true
+| true         | false        | true
+| false        | true         | true
+| false        | false        | false
