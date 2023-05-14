@@ -790,6 +790,449 @@ cout << "Do you need to wear a coat using AND? " << wear_coat << endl;
 
 
 ## 6. Controlling Program Flow
+
+- Controlling Program Flow...
+  - building blocks: Sequence + Selection + Iteration
+  - selection/decision-making: `if if-else switch ?:`
+  - iteration: `for while do-while continue-break`
+- if Statement
+  - execute if true, skip if false
+  - BLOCK STATEMENTS: variable declarations are visible only within the block (LOCAL SCOPE)
+```cpp
+double health {69.3};
+bool player_healed {true};
+if (health < 100 && player_healed)
+    health = 100;
+
+int num {0};
+const int min {10};
+const int max {100};
+cout << "Enter a number between " << min << " and " << max << ": ";
+cin >> num;
+if (num >= min){
+    cout << "\n============= Statement 1 =============" << endl;
+    cout << num << " is greater than or equal to " << min << endl;
+    int diff {num - min};
+    cout << num << " is " << diff << " greater than " << min << endl;
+}
+if (num <= max){
+    cout << "\n============= Statement 2 =============" << endl;
+    cout << num << " is less than or equal to " << max << endl;
+    int diff {max - num};
+    cout << num << " is " << diff << " less than " << max << endl;
+}
+if (num >= min && num <= max){
+    cout << "\n============= Statement 3 =============" << endl;
+    cout << num << " is in range" << endl;
+    cout << "This means that statements 1 and 2 must also display!" << endl;
+}
+if (num == min || num == max){
+    cout << "\n============= Statement 4 =============" << endl;
+    cout << num << " is right on a boundary" << endl;
+    cout << "This means all 4 statements display" << endl;
+}
+```
+- EXERCISE: if Statement - Can you Drive?
+- if else Statement
+  - if true execute statement1, if false execute statement2
+```cpp
+double health {69.3};
+bool player_healed {false};
+// player_healed = true;
+if (health < 100 && player_healed) health = 100;
+else ++health;
+cout << health << endl;
+
+// #include <cstdlib>
+srand(static_cast<int>(time(NULL)));    // seed the random number generator with the current time
+int score {rand() % 100 + 1};           // generate a random number between 1 and 100
+if (score >= 90) cout << score << " : " "A" << endl;
+else if (score >= 80) cout << score << " : " "B" << endl;
+else if (score >= 70) cout << score << " : " "C" << endl;
+else if (score >= 60) cout << score << " : " "D" << endl;
+else cout << score << " : " "F" << endl;
+```
+```cpp
+int num {};
+const int target {10};
+cout << "Enter a number and I'll compare it to " << target << ": ";
+cin >> num;
+if (num >= target){
+    cout << "\n===================================" << endl;
+    cout << num << " is greater than or equal to " << target << endl;
+    int diff {num - target};
+    cout << num << " is " << diff << " greater than " << target << endl;
+} else {
+    cout << "\n===================================" << endl;
+    cout << num << " is less than " << target << endl;
+    int diff {target - num};
+    cout << num << " is " << diff << " less than " << target << endl;
+}
+```
+- EXERCISE: if else Statement - Can you Drive?
+- Nested if Statements
+  - allows for tseting of multiple conditions
+  - dangling else problem: `else` belongs to the closest `if`
+```cpp
+int score {0};
+cout << "Enter your score on the exam (0-100): ";
+cin >> score;
+char letter_grade {};
+if (score >= 0 && score <= 100){
+    cout << "================================" << endl;
+    if (score >= 90) letter_grade = 'A';
+    else if (score >= 80) letter_grade = 'B';
+    else if (score >= 70) letter_grade = 'C';
+    else if (score >= 60) letter_grade = 'D';
+    else letter_grade = 'F';
+    cout << "Your grade is: " << letter_grade << endl;
+    if (letter_grade == 'F') cout << "Sorry, you must repeat the class" << endl;
+    else cout << "Congrats!" << endl;
+} else {
+    cout << "Sorry, " << score << " is not in range" << endl;
+}
+```
+- EXERCISE: Nested if Statements - Can you Drive?
+- switch-case Statement
+  - the control expression must evaluate to an integer type
+  - the case expressions must be constant expressions that evaluate to integer or integer literals
+  - once a match occurs all following case section are executed UNTIL a `break` is reached and the switch is complete
+  - `default` is optional but should be handled
+  - commonly used with ENUM types
+```cpp
+char letter_grade {};
+cout << "Enter the grade you expect on the exam: ";
+cin >> letter_grade;
+
+switch (letter_grade) {
+    case 'a': case 'A': cout << "You need a 90 or above, study hard!" << endl; break;
+    case 'b': case 'B': cout << "You need 80-89 for a B, go study!" << endl; break;
+    case 'c': case 'C': cout << "You need 70-79 for an average grade!" << endl; break;
+    case 'd': case 'D': cout << "Hmm, you should strive a better grade. All you need is 60-69" << endl; break;
+    case 'f': case 'F': {
+        char confirm {};
+        cout << "Are you sure (y/n)? ";
+        cin >> confirm;
+        if (confirm == 'y' || confirm == 'Y') cout << "OK, I guess you didn't study..." << endl;
+        else if (confirm == 'n' || confirm == 'N') cout << "Good - go study!" << endl;
+        else cout << "Illegal choice" << endl;
+        break;
+    }
+    default: cout << "Sorry, not a valid grade" << endl;
+}
+
+// enum Direction {
+//     left, right, up, down
+// };
+// Direction heading {};
+// cout << heading << endl;    // 0 as for default ie. left
+// switch (heading){
+//     case left: cout << "Going left" << endl; break;
+//     case right: cout << "Going right" << endl; break;
+//     case up:     // continues up to break/default
+//     case down:   // continues up to break/default
+//     default: cout << "OK" << endl;
+// }
+```
+- EXERCISE: Switch Statement - Day of the Week
+- Conditional Operator: `(cond_expr) ? expr1 : expr2`
+  - cond_expr evaluates to a boolean expression
+  - if true the value of expr1 is returned, if false then expr2
+  - ternary operator, very useful when used inline, very easy to abuse (AVOID NESTING)!
+```cpp
+int score{69};
+cout << ((score > 90) ? "Excellent" : "Good") << endl;
+
+int num{};
+cout << "Enter an integer: ";
+cin >> num;
+if (num % 2 == 0) cout << num << " is even" << endl;
+else cout << num << " is odd" << endl;
+cout << num << " is " << ((num%2==0) ? "even" : "odd") << endl;
+
+int num1{}, num2{};
+cout << "Enter two integers separated by a space: ";
+cin >> num1 >> num2;
+if (num1 != num2){
+    cout << "Largest: " << ((num1 > num2) ? num1 : num2) << endl;
+    cout << "Smallest: " << ((num1 < num2) ? num1 : num2) << endl;
+} else {
+    cout << "The numbers are the same" << endl;
+}
+```
+- Looping
+  - iteration or repetition; allows the execution of a statement or block of statements repeatedly
+  - made up of a loop condition and the body which contains the statements to repeat
+  - usecases: specific number of times, each element in a collection, while condition remains true, until condition becomes false, until we reach the end of some input stream, forever, many many more...
+  - Cpp looping constructs
+    - for loop: iterate a specific number of times
+    - range-based for loop: one iteration for each element in a range or collection
+    - while loop: iterate while condition remains true, stop when condition becomes false, checking the condition at the beginning of every iteration
+    - do-while loop: like while but checking the condition at the end of every iteration
+- for Loop
+  - `for (initialization; condition; increment) statement;`
+    - initialization executed once before every iteration
+    - condition evaluates to Bool, checked before every iteration; if true loop iterates, if false iterations stop
+    - increment executes after the statements
+  - with ARRAYS[3]: either `i<3` or `i<=2`!!
+  - COMMA operator: not used often but can initialize variables in loops (associativity left-to-right, so result is rightmost)
+```cpp
+for (int i{1}; i<=10; ++i)
+    cout << i << endl;
+
+for (int i{1}; i<=10; i+=2)
+    cout << i << endl;
+
+for (int i{10}; i>0; --i)
+    cout << i << endl;
+cout << "Blastoff!" << endl;
+
+for (int i{10}; i<=100; i+=10)
+    if (i % 15 == 0) cout << i << endl;
+
+for (int i{1}; i<=100; ++i)
+    cout << i << ((i%10==0) ? "\n" : " ");
+```
+```cpp
+for (int i{1}, j{5}; i<=5; ++i, ++j)
+    cout << i << " * " << j << " = " << (i * j) << endl;
+
+int scores [] {100,90,87};
+for (int i{0}; i<3; ++i)
+    cout << scores[i] << endl;
+
+// #include <vector>
+vector <int> nums {10,20,30,40,50};
+for (unsigned i{0}; i<nums.size(); ++i)
+    cout << nums[i] << endl;
+
+for (;;)
+    cout << "Endless loop" << endl;
+```
+- EXERCISE: for Loop - Sum of Odd Integers
+- range-based for Loop
+  - introduced in C++11
+  - same type both condition variable & sequence; either explicit declaration or `auto` keyword
+```cpp
+for (auto c: "This is a test")
+    cout << ((c == ' ') ? '\t' : c);
+
+// More in ../src/
+```
+- EXERCISE: Using the range-based for Loop
+- while Loop
+  - condition testing evaluated to boolean at the beginning of each iteration
+  - input validation!
+```cpp
+int i {1};
+while (i <=5){
+    cout << i << endl;
+    ++i;    // important
+}
+
+i = 1;
+while (i <= 10){
+    if (i % 2 == 0)
+        cout << i << endl;
+    ++i;
+}
+
+int scores [] {100,90,87};
+int i {0};
+while (i < 3){
+    cout << scores[i] << endl;
+    ++i;
+}
+
+int num {};
+cout << "Enter a positive integer - start the countdown: ";
+cin >> num;
+while (num > 0){
+    cout << num << endl;
+    --num;
+}
+cout << "Blastoff!" << endl;
+
+int num {};
+cout << "Enter a positive integer to count up to: ";
+cin >> num;
+int i {1};
+while (num >= i){
+    cout << i << endl;
+    i++;
+}
+```
+```cpp
+int number {};
+cout << "Enter an integer between 0 and 100: ";
+cin >> number;
+while (cin.fail() || number <= 0 || number >= 100){
+    cin.clear();          // clear the fail bit
+    cin.ignore(1000, '\n'); // discard extraneous characters
+    cout << "Enter a valid integer: ";
+    cin >> number;
+}
+cout << "Thanks" << endl;
+
+bool done {false};
+int number {0};
+while (!done){
+    cout << "Enter an integer between 1 and 5: ";
+    cin >> number;
+    if (number<=1 || number>=5)
+        cout << "Out of range, try again" << endl;
+    else {
+        cout << "Thanks!" << endl;
+        done = true;
+    }
+}
+```
+- EXERCISE: while Loop (!)
+- do while Loop
+  - condition evaluated after iteration, so the loop body will execute at least once!
+```cpp
+int number {};
+do {
+    cout << "Enter an integer between 1 and 5: ";
+    cin >> number;
+} while (number <= 1 || number >= 5);
+cout << "Thanks" << endl;
+
+char selection {};
+do {
+    double width{}, height{};
+    cout << "Enter width and height separated by a space: ";
+    cin >> width >> height;
+    double area {width * height};
+    cout << "The area is " << area << endl;
+    cout << "Calculate another? (y/n): ";
+    cin >> selection;
+} while (selection == 'y' || selection == 'Y');
+cout << "Thanks!" << endl;
+```
+- continue and break
+  - used within any Loop; don't overuse them!
+  - continue: no further statements in the body of the loop are executed; control immediately goes directly to the beginning of the loop for the next iteration
+  - break: no further statements in the body of the loop are executed; loop is immediately terminated; control immediately goes to the statement following the loop construct
+```cpp
+vector <int> values {1,2,-1,3,-1,-99,7,8,10};
+for (auto val: values){
+    if (val == -99)
+        break;
+    else if (val == -1)
+        continue;
+    else
+        cout << val << endl;
+}
+```
+- Infinite Loops
+  - endless loop: control expression always evaluate to true
+  - usually unintented and a programmer error
+  - sometimes used with `break` statements to control them
+  - sometimes REQUIRED: event loop in an event-driven program, Operating System, etc.
+    - mobileDevices, embeddedSystems: listen for mouseClicks, mouseMovement, touches, etc.
+    - handle IO, manage resources, etc. until poweroff
+```cpp
+// Infinite for
+for (;;)
+    cout << "This will print forever" << endl;
+
+// Infinite while
+while (true)
+    cout << "This will print forever" << endl;
+
+// Infinite do-while
+do {
+    cout << "This will print forever" << endl;
+} while (true);
+
+// Actually useful but better add condition to be evaluated
+while (true){
+    char again {};
+    cout << "Do you want to loop again? (y/n): ";
+    cin >> again;
+    if (again == 'n' || again == 'N')
+        break;
+}
+```
+- Nested Loops
+  - as many levels deep as required; very useful with multi-dimensional data structures
+  - outer loop VS inner loop
+```cpp
+for (int outer_val {1}; outer_val <= 2; ++outer_val){
+    for (int inner_val {1}; inner_val <= 3; ++inner_val)
+        cout << outer_val << ": " << inner_val << endl;
+    cout << "Inner loop completed" << endl;
+}
+cout << "Outer loop completed" << endl;
+
+for (int num1 {1}; num1 <= 10; ++num1){
+    cout << num1 << " TIMES TABLE" << endl;
+    for (int num2 {1}; num2 <= 10; ++num2){
+        cout << num1 << " * " << num2 << " = " << num1 * num2 << endl;
+    }
+    cout << "-------------------" << endl;
+}
+```
+```cpp
+// Arrays
+int grid[5][3] {};
+for (int row{0}; row<5; ++row){
+    for (int col{0}; col<3; ++col){
+        grid[row][col] = 420;
+        cout << grid[row][col] << " ";
+    }
+    cout << endl;
+}
+
+// Vectors + range-based loop
+vector<vector<int>> vector_2d {
+    {1,2,3},
+    {10,20,30,40},
+    {100,200,300,400,500}
+};
+for (auto vec: vector_2d){
+    for (auto val: vec)
+        cout << val << " ";
+    cout << endl;
+}
+
+// Nested Loops - Histogram
+int num_items {};
+cout << "How many data items do you have? ";
+cin >> num_items;
+vector <int> data {};
+for (int i{1}; i <= num_items; ++i){
+    int data_item {};
+    cout << "Enter data item " << i << ": ";
+    cin >> data_item;
+    data.push_back(data_item);
+}
+cout << "Displaying Histogram" << endl;
+for (auto val: data){
+    for (int i{1}; i<=val ; ++i)
+        cout << ((i%5==0) ? "+" : "-");
+    cout << endl;
+}
+```
+- EXERCISE (!): Nested Loops - Sum of the Products of all Pairs of Vector Elements
+- SECTION CHALLENGE
+- SECTION QUIZ
+  1. What is the value of `num` after the following code executes if the user enters `10` at the keyboard? `int num; cin >> num;  if (num > 10) num -= 10; else num += 10;` *20*
+  2. What does the following code snippet display if the user enters `70` at the keyboard? *—*
+  3. *—*
+  4. What will the following code snippet display? `int num = 10; while (num >= 1) cout << num << " "; num--;` *10 10 10 ... infinitely*
+  5. The while loop is an example of a(n) *pre-test loop*
+  6. A do-while loop is guaranteed to execute *at least one time*
+  7. The for loop has 3 expressions in the following order: *initialize, test, increment*
+  8. A loop that is located inside another loop is called a(n) *nested loop*
+  9. In order to terminate the execution of a loop, we can use the *`break`* statement
+  10. If you know ahead of time how many times you need to loop, which loop would you use? *for loop*
+
+
+
+
+
 ## 7. Characters and Strings
 ## 8. Functions
 ## 9. Pointers and References

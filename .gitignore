@@ -2,8 +2,9 @@
 *.todo
 *.log
 
-# Ignore backups and tests
+# Ignore backups, mocks and tests
 *test/
+*mock/
 bak/
 *-bak*
 

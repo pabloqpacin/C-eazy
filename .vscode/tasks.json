@@ -11,11 +11,15 @@
                 "-o",
                 "${fileDirname}/${fileBasenameNoExtension}",
                 "-ftime-report", // src: https://stackoverflow.com/questions/3025443/how-to-calculate-gcc-compilation-time
+                // "-ftime-report-details",
                 "-Wall",
                 "-Wextra",
                 "-Wuninitialized",
                 "-Wnarrowing",
                 "-Wconversion",
+                "-Wswitch",
+                "-Wswitch-enum",
+                // "-Wpedantic",
                 // "-Werror"
             ],
             "options": {
