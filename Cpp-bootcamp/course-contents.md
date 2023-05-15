@@ -1230,10 +1230,382 @@ for (auto val: data){
   10. If you know ahead of time how many times you need to loop, which loop would you use? *for loop*
 
 
-
-
-
 ## 7. Characters and Strings
+
+> `<cctype>` `<cstring>` `<cstdlib>` // `<string>`
+
+```markdown
+# SECTION SUMMARY
+
+// C-style
+- <cctype>
+  - `isalpha(c)` `isalnum(c)` `isdigit(c)` `isprint(c)`
+  - `islower(c)` `isupper(c)` `isspace(c)` `ispunct(c)`
+  - `tolower(c)` `toupper(c)`
+- <cstring>
+  - `strcpy(...)`
+  - `strcat(...)`
+  - `strlen(...)`
+- <cstdlib>
+  - ...
+
+// C++
+- <string>
+  - `substr(starting_index, length)`
+  - `substr(starting_index, length)`
+  - `find(substring,starting_index)`
+  - `erase(starting_index, length)`
+  - `my_string.clear()`
+  - `my_string.length()`
+  - `getline(cin,variable,length)`
+- GENERAL
+  - `my_string.at(n)`
+```
+
+- Character Functions
+  - [\<cctype>](https://cplusplus.com/reference/cctype/): simple and useful functions (always expect a single character) for...
+    - **testing** characters (evaluate to true/false) `isalpha(c)` `isalnum(c)` `isdigit(c)` `islower(c)` `isprint(c)` `ispunct(c)` `isupper(c)` `isspace(c)` ...
+    - converting character case: `tolower(c)` `tolower(c)`
+- C-Style Strings
+  - sequence of characters:
+    - contiguous in memory
+    - implemented as an array of characters (we can access individual chars via 'array subscript syntax')
+    - terminated by a NULL character (character `\0` with a value of zero)
+    - referred to as zero or null terminated strings
+  - string literal
+    - sequence of characters in double quotes, eg. "Frank"
+    - constant
+    - terminated with NULL character
+  - [\<cstring>](https://cplusplus.com/reference/cstring/): copying, concatenation, comparison, searching,... // All rely on char sequence terminating in NULL char!!
+    - `strcpy`, `strcat`, `strlen`
+  - \<cstdlib>: convert C-style strings to: integer, float, long, etc
+```cpp
+// C-style String Variables - '\0' demo
+char my_name[8] {"Frank"};
+cout << "Num elements: " << sizeof(my_name) / sizeof(my_name[0]) << endl;
+for (auto val: my_name){
+    if (isalnum(val)) cout << val << endl;  // #include <cctype>
+    else if (val == '\0') cout << "NULL" << endl;
+    else cout << "idk" << endl;
+}
+// my_name[6] = 'y';    // *stack smashing*
+
+
+// C-style String Variables - assignment demo
+char my_name[8];
+    // my_name = "Frank";   // error
+strcpy(my_name, "Frank");  // #include <cstring>
+```
+- Working with C-style Strings
+```cpp
+#include <cctype>   // for c-style string functions
+#include <cstring>  // for character-based functions
+#include <iostream>
+using namespace std;
+
+int main(){
+    char first_name[20] {};
+    char last_name[20] {};
+    char full_name[50] {};
+    // char temp[50] {};
+    cout << "Enter your first name: ";
+    cin >> first_name;
+    cout << "Enter your last name: ";
+    cin >> last_name;
+    // C-style variables are returned char by char until '\0' is found
+    // 'strlen' returns a 'size_t' datatype
+    cout << "Hello " << first_name << ", your first name has "
+         << strlen(first_name) << " characters, \nand your last name, "
+         << last_name << ", has " << strlen(last_name) << " characters" << endl;
+
+    strcpy(full_name, first_name);
+    strcat(full_name, " ");
+    strcat(full_name, last_name);
+    cout << "Your full name is " << full_name << endl;
+    return 0;
+}
+```
+```cpp
+cout << "Enter your full name: ";
+cin.getline(full_name,50);
+// cin >> full_name; // Characters after the space won't be read!!
+cout << "Your full name is " << full_name << endl;
+
+strcpy (temp, full_name);
+
+if (strcmp(temp, full_name) == 0)
+    cout << temp << " and " << full_name << " are the same" << endl;
+else cout << temp << " and " << full_name << " are different" << endl;
+
+for (size_t i{0}; i< strlen(full_name); ++i)
+    if (isalpha(full_name[i]))
+        full_name[i] = static_cast<char>(toupper(full_name[i]));
+        // full_name[i] = toupper(full_name[i]);
+cout << "Your full name is " << full_name << endl;
+
+if (strcmp(temp, full_name) == 0)
+    cout << temp << " and " << full_name << " are the same" << endl;
+else cout << temp << " and " << full_name << " are different" << endl;
+
+cout << "Result of comparing " << temp << " and " << full_name << ": " << strcmp(temp, full_name) << endl;    // positive
+cout << "Result of comparing " << full_name << " and " << temp << ": " << strcmp(full_name, temp) << endl;    // negative
+```
+- EXERCISE: Using C-style Strings
+- C++ Strings (OOP-CLASSES!!)
+  - **`std:string`: Class in the Standard Template Library**
+    - `#include <string>`
+    - std namespace
+    - contiguous in memory BUT *dynamic size*
+    - work with input and output streams
+    - lots of useful **member functions**
+    - familiar operators can be used...
+    - safer (bound-checking...) & easily converted to C-style Strings if needed
+  - assignment with `=` unlike C-style (functions)!! (`string s1; s1 = "C++ Rocks!";`)
+  - comparison: character by character lexically
+    - can compare: two objects, an object and a C-style literal, an object and a C-style variable
+  - `substr(starting_index, length)`: extracts a substring from a std::string object
+  - searching - `find(substring,starting_index)`: returns the index of a substring in a std::string
+  - removing characters - `erase(start_index, length)`, `clear()`
+  - Input - `>>` VS `getline()` (up to space VS up to \\n)
+```cpp
+#include <string>
+using namespace std;
+
+// Declaring and initializing
+string s1;              // Empty
+string s2 {"Frank"};    // Frank
+string s3 {s2};         // Frank
+string s4 {"Frank", 3}; // Fra
+string s5 {s3, 0, 2};   // Fr
+string s6 (3, 'X');     // XXX  // mind 'constructor syntax ()'
+
+// Assignment =
+string s1;
+s1 = "C++ Rocks!";`
+string s2;
+s1 = s2;
+
+// Concatenation
+string part1 {"C++"};
+string part2 {"is a powerful"};
+string sentence;
+sentence = part1 + " " + part2 + " language";
+// sentence = "C++" + " is powerful"; // ERROR - need c++ strings with c-style literals
+
+// Accessing characters [] and at() method
+string s1 {"Frank"};
+cout << s1[0] << endl;      // F
+cout << s1.at(0) << endl;  // F
+s1[0] = 'f';        // frank
+s1.at(0) = 'p';    // prank    
+string s2 {"Frank"};
+for (int c: s2)
+    cout << c << endl;
+// char my_name [] {"Frank"};
+// for (int c: my_name)
+    // cout << c << endl;
+```
+```cpp
+// Comparing
+cout << boolalpha;
+string s1 {"Apple"};
+string s2 {"Banana"};
+string s3 {"Kiwi"};
+string s4 {"apple"};
+string s5 {s1};
+cout << (s1 == s5) << endl;         // true
+cout << (s1 == s2) << endl;         // false
+cout << (s1 != s2) << endl;         // true
+cout << (s1 < s2) << endl;          // true
+cout << (s2 > s1) << endl;          // true
+cout << (s4 < s5) << endl;          // false
+cout << (s1 == "Apple") << endl;    // true
+
+// Substrings - substr()
+    string s1 {"This is a test"};
+    // for (size_t i{0}; i<s1.size();++i)
+    //     cout << i << ": " << s1.at(i) << endl;
+    cout << s1.substr(0,4) << endl;  // This
+    cout << s1.substr(5,2) << endl;  // is
+    cout << s1.substr(10,4) << endl; // test
+
+// Searching - find()
+string s1 {"This is a test"};
+cout << s1.find("This") << endl;    // 0
+cout << s1.find("is") << endl;      // 2
+cout << s1.find("test") << endl;    // 10
+cout << s1.find('e') << endl;       // 11
+cout << s1.find("is",4) << endl;    // 5
+cout << s1.find("XX") << endl;      // string::npos
+
+// Removing characters
+string s1 {"This is a test"};
+cout << s1.erase(0,5) << endl;   // is a test
+cout << s1.erase(5,4) << endl;   // is a
+s1.clear();
+cout << s1.erase(0,5) << endl;   // empty!!
+
+// Other useful methods
+string s1 {"Frank"};
+cout << s1.size() << endl;      // 5
+cout << s1.length() << endl;    // 5
+s1 += " James";
+cout << s1.length() << endl;      // 11
+
+// INPUT
+string s1;
+// cin >> s1;           // Hello there - Only accepts up to the first space
+// cout << s1 << endl;  // Hello
+getline(cin, s1);       // Read entire line until \n
+cout << s1 << endl;     // Hello there
+getline(cin,s1,'x');    // this isx (DELIMITER!!)
+cout << s1 << endl;     // this is
+```
+- Working with C++ Strings
+```cpp
+string s0;  // OK, no garbage
+string s1 {"Apple"};
+string s2 {"Banana"};
+string s3 {"Kiwi"};
+string s4 {"apple"};
+string s5 {s1};
+string s6 {s1,0,3}; // App
+string s7 (10,'X'); // XXXXXXXXXX
+
+s3 = s1 + " and " + s2 + " Juice";
+// s3 = "Nice " + "cold " + s1 + " and " + s2 + " Juice";  // ERROR - need strcat()
+cout << s3 << endl;
+
+for (size_t i{0}; i<s1.length(); ++i)
+    cout << s1.at(i) << endl;
+for (auto c: s1)
+    cout << c << endl;
+```
+```cpp
+// NOTE string:npos !!
+string s1 {"The secret word is Boo"};
+string word {};
+
+cout << "Enter the word to find: ";
+getline(cin, word);
+size_t position {s1.find(word)};
+
+if (position != string::npos)
+    cout << "Found " << word << " at position: " << position << endl;
+else cout << "Sorry, " << word << " not found" << endl;
+```
+- EXERCISES: Using C++ Strings
+- SECTION CHALLENGE
+- SECTION QUIZ
+  1. C-style strings are terminated with a(n) *null character \0*
+  2. The function we can use to copy one C-style string to another is *`strcpy`*
+  3. In order to use C-style string functions we must #include *`<cstring>`*
+  4. To convert a char to its upper case equivalent we can use the *`toupper`* function
+  5. The C-style string name[6] can *—*
+  6. In order to use a C++ string object, we must #include *`<string>`*
+  7. The + operator allows us to *concatenate* two C++ strings
+  8. In order to find the index of a substring within a C++ string, we can use the *`find`* method
+  9. We can compare two C++ strings using the *`==`*
+  10. Which of the following are true about C++ strings? *C++ strings are objects, have a rich set of member methods, are preferred over C-style strings and can change in size dynamically*
+- ASSIGNMENT: Letter Pyramid
+
+<details>
+
+```cpp
+#include <string>
+#include <iostream>
+using namespace std;
+
+
+int main() {
+    string inputString;
+    cout << "Enter a string: ";
+    getline(cin, inputString);
+
+    string::size_type length = inputString.length();
+
+    for (string::size_type i = 0; i < length; i++) {
+        for (string::size_type j = length - 1; j > i; j--) {
+            cout << " ";
+        }
+
+        for (string::size_type k = 0; k <= i; k++) {
+            cout << inputString[k];
+        }
+
+        for (string::size_type l = i - 1; l != string::npos; l--) {
+            cout << inputString[l];
+        }
+
+        cout << endl;
+    }
+
+    return 0;
+}
+```
+```cpp
+// Letter Pyramid
+// Written by Frank J. Mitropoulos
+
+/*
+Get the input from the user and store it in a std::string variable
+Loop for each letter in the string entered by the user
+    Determine how many blank spaces must be displayed before the current row and display them
+    Determine how many letters must be displayed before the current character and display them
+    Display the current character
+    Display the remaining characters in reverse order
+    Complete the row with a new line
+
+*/
+
+#include <string>
+#include <iostream>
+using namespace std;
+
+
+int main()
+{
+    string letters{};
+    cout << "Enter a string: ";
+    getline(cin, letters);
+
+    size_t num_letters = letters.length();
+
+    int position {0};
+
+    // for each letter in the string
+    for (char c: letters) {
+
+        size_t num_spaces = num_letters - position;
+        while (num_spaces > 0) {
+            cout << " ";
+            --num_spaces;
+        }
+
+        // Display in order up to the current character
+        for (size_t j=0; j < position; j++) {
+            cout << letters.at(j);
+        }
+
+        // Display the current 'center' character
+        cout << c;
+
+        // Display the remaining characters in reverse order
+        for (int j=position-1; j >=0; --j) {
+            // You can use this line to get rid of the size_t vs int warning if you want
+            auto k = static_cast<size_t>(j);
+            cout << letters.at(k);
+        }
+
+        cout << endl; // Don't forget the end line
+        ++position;
+    }
+
+    return 0;
+}
+```
+</details>
+
 ## 8. Functions
 ## 9. Pointers and References
 ## 10. OOP - Classes and Objects
