@@ -341,6 +341,48 @@ int main(){
 
 ## 4. Arrays and Vectors
 
+```markdown
+# UPDATE
+- use `&variable` to print the memory address of any element
+```
+<details>
+
+```cpp
+// ARRAYS
+#include <iostream>
+using namespace std;
+
+int main(){
+    int my_scores [] {1,2,3,4,5};
+    for (auto n: my_scores)
+        cout << n << ": " << &n << endl;
+    cout << endl;
+    int arr_size = sizeof(my_scores) / sizeof(my_scores[0]);
+    for (int i{0}; i<arr_size; ++i)
+        cout << my_scores[i] << ": " << &my_scores[i] << endl;
+    return 0;
+}
+```
+```cpp
+// VECTORS
+#include <vector>
+#include <iostream>
+using namespace std;
+
+int main(){
+    vector<char> my_scores {'a','b','c','d','e'};
+    for (auto c: my_scores) 
+        cout << c << ": " << static_cast<void*>(&c) << endl;
+    // auto => deduces the type as a copy of the elements (same address)
+    // auto& => deduces the type as a reference to the elements (different addresses)
+    cout << endl;
+    for (size_t i{0}; i<my_scores.size(); ++i)
+        cout << my_scores[i] << ": " << static_cast<void*>(&my_scores[i]) << endl;
+    return 0;
+}
+```
+</details>
+
 - What is an Array?
   - compound **data type/structure**: collection of elements of the same type
   - FIXED size, stored contiguosly in memory
@@ -1607,6 +1649,401 @@ int main()
 </details>
 
 ## 8. Functions
+
+```markdown
+# SECTION SUMMARY
+
+<cmath>
+- `sqrt(num)`   `pow(base,exp)`
+- sin cos
+- ceil floor round
+<cstdlib>
+- srand
+- rand
+<ctime>
+- `time()`
+<random>
+- [ ] 
+```
+
+> There's a field in Computer Science called Software Engineering. SWE is all about designing your solutions and writing your code in a way that can be easily understood, debugged and extended. A fundamental principle is abstraction, which is exactly what functions help us achieve.
+
+- What is a Function?
+  - Cpp program == [Cpp Standard Libraries](https://en.cppreference.com/w/cpp/header) + Third-party libraries + our own FUNCTIONS and CLASSES
+  - Functions allow the modularization of a program: separate code into logical self-contained units, that can be reused
+  - Boss/Worker analogy: write code to the function specification - understand what the function does, what information needs, what returns, any errors it may produce, performance constraint
+    - Don't worry about HOW the function works internally (unless you are the one writing the function)
+```cpp
+#include <cmath>
+
+int add_numbers(int a, int b){
+    if (a < 0 || b < 0) return 0;
+    else return a + b;
+}
+
+int main(){
+    cout << sqrt(400.0) << endl;
+    cout << pow(2.0,3.0) << endl;
+    cout << add_numbers(-1,9) << endl;
+    return 0;
+}
+```
+```cpp
+#include <ctime>
+#include <cstdlib>
+
+int random_number {};
+size_t count {10};   // amount of random numbers to generate
+int min {1};         // lower bound (inclusive)
+int max {20};        // upper bound (inclusive)
+
+// Seed the random number generator, otherwise the generation sequence will always be the same
+cout << "RAND_MAX on my system is: " << RAND_MAX << endl;
+srand(static_cast<int>(time(nullptr)));
+
+for (size_t i{1}; i<=count; ++i){
+    random_number = rand() % max + min;
+    cout << random_number << endl;
+}
+```
+- EXERCISE: Using Functions from the `<cmath>` library
+- Function Definition
+  - return type (`void`|datatype) + name + parameter list + body
+```cpp
+#include <iostream>
+using namespace std;
+
+const double pi {3.14159};
+
+double calc_area_circle(double radius){
+    return pi * radius * radius;
+}
+double calc_volume_cylinder(double radius, double height){
+    return calc_area_circle(radius) * height;
+    // return pi * radius * radius * height;
+}
+
+void area_circle(){
+    double radius{};
+    cout << "Enter the radius of the circle: ";
+    cin >> radius;
+    cout << "The area of a circle with radius " << radius << " is: " << calc_area_circle(radius) << endl;
+}
+void volume_cylinder(){
+    double radius{};
+    double height{};
+    cout << "Enter the radius of the cylinder: ";
+    cin >> radius;
+    cout << "Enter the height of the cylinder: ";
+    cin >> height;
+    cout << "The volume of a cylinder with radius " << radius << " and height " << height << " is: " << calc_volume_cylinder(radius,height) << endl;
+}
+
+int main(){
+    area_circle();
+    volume_cylinder();
+    return 0;
+}
+```
+- Function Prototypes <!--PRE-DECLARATION-->
+  - Compiler must know a function before it's used
+    - Define functions before calling them
+      - ok for small programs
+      - not practical for larger programs
+      - impossible if they call one another
+    - Use function prototypes
+      - tells the compiler what it needs to know without a full function definition
+      - also called forward declarations
+      - placed at the beginning of the program
+      - also used in our header files (`.h`) - more about this later
+      <!-- - CUSTOM: if function is prototyped but not defined, Linker error at compile-time! -->
+```cpp
+#include <iostream>
+using namespace std;
+void supdawg(int count);    // Prototype - function pre-declared
+void dawg();               // Prototype - function pre-declared
+
+int main(){
+    supdawg(5);
+    cout << "not much wbu" << endl;
+    return 0;
+}
+void supdawg(int count){
+    for (int i{0}; i<count; ++i){
+    cout << "sup";
+    dawg();
+    }
+}
+void dawg(){
+    cout << "dawg" << endl;
+}
+```
+- Function Parameters and the `return` Statement
+  - data passed to a function
+    - called 'arguments' in the function call
+    - called 'parameters' in the function definition
+    - must match in number, order and type, although the compiler will try to do type-converstion if necessary <!--NO WARNINGS for strings/arrays...-->
+  - *Pass-by-value*
+    - data passed into a function is passed-by-value
+    - a **copy** of the data is passed to the function — which has pros and cons...
+    - whatever changes made to the parameter in the function don't affect the argument passed in
+    - formal VS actual parameters: defined in function header VS used in function call, arguments
+  - Function `return` statement
+    - if function returns a value it requires the statement; if the function doesn't return a value it is *optional*
+    - immediately exits the function!
+    - we can have many in a function, but should avoid it
+    - the return value is the result of the function call...
+```cpp
+void param_test(int formal){
+    cout << formal << endl; // 50
+    formal = 100;
+    cout << formal << endl; // 100
+}
+
+int main(){
+    int actual {50};
+    cout << actual << endl; // 50
+    param_test(actual);
+    cout << actual << endl; // 50
+    return 0;
+}
+```
+- EXERCISE: Functions and Prototypes - Converting Temperatures
+- Default Argument Values
+  - when a function is called, all arguments must be supplied
+  - sometimes some of the arguments have the same values most of the time
+  - we can tell the compiler to use default values if the arguments are not supplied
+  - default values can be in the prototype OR definition, not both — best practice in the prototype; must appear at the tail end of the parameter list
+  - can have multiple default values — must appear consecutively at the tail end of the parameter list
+```cpp
+double calc_cost(double base_cost, double tax_rate = 0.06);
+
+double calc_cost(double base_cost, double tax_rate){
+    return base_cost += (base_cost * tax_rate);
+}
+
+int main(){
+    double cost {};
+    cost = calc_cost(100.0);    // will use the default tax
+    cout << "Cost: " << cost << endl;
+    cost = calc_cost(100.0, 0.08);  // will use 0.08 not the default
+    cout << "Cost: " << cost << endl;
+    return 0;
+}
+```
+```cpp
+void greeting(string name, string prefix = "Mr.", string suffix = "");
+
+void greeting(string name, string prefix, string suffix){
+    cout << "Hello " << prefix + " " + name + " " + suffix << endl;
+}
+
+int main(){
+    greeting("Pablo Quevedo");
+    greeting("Frank Miller", "Dr.");
+    greeting("Glenn Jones", "Dr.", "M.D.");
+    greeting("James Rogers", "Professor", "Ph.D");
+    return 0;
+}
+```
+- EXERCISE: Using Default Argument Values - Grocery List
+- Overloading Functions
+  - (we can have functions that have) different parameter types lists that have the same name
+  - abstraction mechanism since we can just think 'print' for example, and specify the parameter data3type
+  - a type of **polymorphism**: we can have the same name work with different data types to execute similar behavior
+  - the compiler must be able to tell the functions apart based on the parameter lists and arguments supplied
+  - the `return` type is not considered! — thus parameters differenciate
+```cpp
+#include <vector>
+#include <string>
+#include <iostream>
+using namespace std;
+
+void print(int num=69){
+    cout << "Print int: " << num << endl;
+}
+void print(char c){
+    cout << "Print char: " << c << endl;
+}
+void print(double num=6.9){
+    cout << "Print double: " << num << endl;
+}
+void print(float num){
+    cout << "Print float: " << num << endl;
+}
+void print(string s){
+    cout << "Print string: " << s << endl;
+}
+void print(vector<string> vec){
+    cout << "Print vector: ";
+    for (auto v: vec)
+        cout << v << " ";
+    cout << endl;
+}
+
+int main(){
+    print(100);
+    print('A'); // Prints char or int (65) if no char function!!
+    print(123.5);
+    print(123.5F);  // Prints float or double if no float function!
+    print("C-style string");
+    string s {"C++ string"};
+    vector<string> vec {"who","am","i"};
+    print(vec);
+    // print(); // ERROR because two functions with default means confused compiler!
+    return 0;
+}
+```
+- EXERCISE: Overloading Functions - Calculating Area
+- Passing Arrays to Functions
+  - just need to provide square brackets in the formal parameter description
+    - `void print_array(int numbers [], size_t size);`
+  - the array elements are NOT copied, instead we are passing in the **memory address** of the first element
+    - since the array name evaluates to the location of the array in memory, this address is what is copied!!
+    - so the function has no idea how many elements are in the array since all it knows is the location of the first element (the name of the array)
+    - to iterate effectively, pass in the **size** of the array to the function!!
+  - since we are passing in the location of the array, **the function may modify the actual array**!
+    - use `const` to ensure unmodifiable lvalue
+```cpp
+void zero_array(int scores [], size_t size);
+void set_array(int scores [], size_t size, int value = 100);
+void print_array(const int scores [], size_t size);
+
+void zero_array(int scores [], size_t size){
+    // for (auto n: scores) n = 0;  // won't work...
+    for (size_t i{0}; i<size; ++i)
+        scores[i] = 0;
+}
+void set_array(int scores [], size_t size, int value){
+    for (size_t i{0}; i<size; ++i)
+        scores[i] = value;
+}
+void print_array(const int scores [], size_t size){
+    for (size_t i{0}; i<size; ++i){
+        cout << scores[i] << " ";
+        // scores[i] = 0;  // Good ERROR because constant declaration
+    }
+    cout << endl;
+}
+
+int main(){
+    int my_scores [] {100,98,90,86,84};
+    int arr_size = sizeof(my_scores) / sizeof(my_scores[0]);
+    // for (auto n: my_scores) ++arr_size;
+    
+    // zero_array(my_scores, arr_size);
+    set_array(my_scores, arr_size, 97);
+    print_array(my_scores, arr_size);
+    return 0;
+}
+```
+- EXERCISE: Passing Arrays to Functions - Print a Guest List
+- *Pass-by-Reference*
+  - Sometimes we want to be able to change the actual parameter from within the function body
+  - To achieve this we need the **location or address** of the actual parameter
+  - We can use parameters to tell the compiler to pass in a reference to the actual parameter
+  - The formal parameter will now be an alias for the actual parameter
+```cpp
+#include <vector>
+#include <string>
+#include <iostream>
+using namespace std;
+
+void pass_by_ref1(int &num);
+void pass_by_ref2(string &s);
+void pass_by_ref3(vector<string> &v);
+void print_vector(const vector<string> &v);
+
+void pass_by_ref1(int &num){
+    num = 1000;
+}
+
+void pass_by_ref2(string &s){
+    s = "Changed";
+}
+
+void pass_by_ref3(vector <string> &v){
+    v.clear();
+}
+
+void print_vector(const vector<string> &v){
+    for (auto s: v)
+        cout << s << " ";
+    cout << endl;
+}
+
+int main(){
+    int num {10};
+    cout << "Num before calling pass_by_ref1: " << num << endl;
+    pass_by_ref1(num);
+    cout << "Num after calling pass_by_ref1: " << num << endl;
+
+   string name{"Frank"};
+   cout << "\nName before calling pass_by_ref2: " << name << endl;
+   pass_by_ref2(name);
+   cout << "Name after calling pass_by_ref2: " << name << endl;
+
+   vector<string> stooges {"Larry", "Moe", "Curly"};
+   cout << "\nStooges before calling pass_by_ref3: ";
+   print_vector(stooges);
+   pass_by_ref3(stooges);
+   cout << "Stooges after calling pass_by_ref3: ";
+   print_vector(stooges);
+
+    cout << endl;
+    return 0;
+}
+```
+- EXERCISE: Using Pass by Reference - Print a Guest List
+- **Scope Rules**
+  - C++ uses scope rules to determine where an identifier can be used
+  - C++ uses static or lexical scoping
+  - Local or Block scope
+    - Identifiers declared in a block `{}`
+    - Function parameters have block scope
+    - Only visible within the the block `{}` where declared
+    - Function local variables are only active while the function is executing
+    - Local variables are NOT preserved between function calls
+    - With nested blocks inner blocks can 'see' but outer blocks cannot 'see' in
+    - Static local variables (`static int value {10};`), value is preserved between function calls.
+  - Global scope
+    - Identifier declared outside any function or class
+    - Visible to all parts of the program after the global identifier has been declared
+    - Global constants are OK
+    - Best practice - DON'T use global variables
+```cpp
+void static_local_example(){
+    static int num {5000};  // retains its value between calls
+    cout << "\nLocal static num is " << num << " in static_local_example - start" << endl;
+    num += 1000;
+    cout << "Local static num is " << num << " in static_local_example - end" << endl;
+}
+
+int main(){
+    int num {100};
+    int num1 {500};
+    cout << "Local num is " << num << " in main" << endl;
+    { // Creates a new level of scope
+        int num {200};
+        cout << "Local num is " << num << " in inner block in main" << endl;
+        cout << "Inner block in main can see out - num1 is " << num1 << endl;
+    }
+    cout << "Local num is " << num << " in main still" << endl;
+    static_local_example(); // 5000 - 6000
+    static_local_example(); // 6000 - 7000
+    static_local_example(); // 7000 - 8000
+    return 0;
+}
+```
+- How do Function Calls Work?
+  - 
+- inline Functions
+- Recursive Functions
+- EXERCISE: Implementing a Recursive Function - Save a Penny
+- SECTION CHALLENGE
+- SECTION QUIZ
+- 
+
 ## 9. Pointers and References
 ## 10. OOP - Classes and Objects
 ## 11. Operator Overloading

@@ -17,6 +17,7 @@
       - [Integer](#integer)
       - [Floating-point](#floating-point)
       - [Boolean](#boolean)
+    - [Not primitives](#not-primitives)
   - [3. Constants](#3-constants)
     - [Literal Constants](#literal-constants)
       - [Integer Literal Constants](#integer-literal-constants)
@@ -26,14 +27,18 @@
     - [Constant Expressions](#constant-expressions)
     - [Emumerated Constants](#emumerated-constants)
     - [Defined Constants](#defined-constants)
-  - [Expressions \& Statements](#expressions--statements)
+  - [i. Control Flow](#i-control-flow)
   - [n. ...OOP](#n-oop)
     - [...METHODS](#methods)
   - [m. SPECIAL FEATURES](#m-special-features)
     - [Preprocessor Directives](#preprocessor-directives)
     - [Libraries - Header files](#libraries---header-files)
+      - [Cpp Standard Library header files](#cpp-standard-library-header-files)
+      - [](#)
   - [z. APPENDIX](#z-appendix)
     - [Boolean Algebra](#boolean-algebra)
+    - [input validation](#input-validation)
+    - [...member functions](#member-functions)
 
 </details>
 
@@ -140,7 +145,7 @@
 | 14         | &&                        | Logical AND                | "
 | 15         | \|\|                      | Logical OR                 | "
 | 16         | ?: = op=                  | Ternary conditional, Direct assignment, Compound assignment | Right-to-left ←
-| 17         | 
+| 17         | ,                         | Comma                      | Left-to-right →
 
 ### STREAM MANIPULATORS
 
@@ -206,6 +211,10 @@
 | ---  | ---
 | bool | usually 8 bits, true/false
 
+### Not primitives
+
+- `size_t`: unsigned integer/long data type that is typically used to represent the size of an object or array
+
 <hr>
 
 ## 3. Constants
@@ -253,19 +262,29 @@
 
 > `enum keyword`
 
+```cpp
+enum Color {
+    red, green, blue
+};
+Color screen_color {green}
+// Color screen_color {};  // defaults to red
+```
+
 ### Defined Constants
 
 > `#define keyword`
 
-## Expressions & Statements
-
-... 
+## i. Control Flow
 
 
+
+<hr>
 
 ## n. ...OOP
 
 ### ...METHODS
+
+> methods are functions that work with objects
 
 - vector.at(element) == arr[i]
   - object.method(index)
@@ -283,7 +302,27 @@
 
 ### Libraries - Header files
 
-- `<iostream>`
+#### [Cpp Standard Library header files](https://en.cppreference.com/w/cpp/header)
+
+- {1} `<iostream>` 
+- {2} `<iomanip>` 
+  - cout << fixed << setprecision(2); // prints 2 decimals
+- {4} `<vector>`  <!--Standard Template Library-->
+- [`<cctype>`](https://cplusplus.com/reference/cctype/) aka `ctype.h`
+  - isalpha(), isupper(), ... <!--True if...-->
+- `<climits>`
+- `<cfloat>`
+- [`<cstring>`](https://cplusplus.com/reference/cstring/)
+  - strcpy
+- {8} `<cmath>` 
+  - sqrt, pow; sin, cos; ceil, floor, round
+- {8} `<cstdlib>`
+  - rand, srand
+- {8} `<ctime>`
+  - time()
+
+
+<details>
 
 ```cpp
 ───────┬────────────────────────────────────────────────────────────────────────────────────────
@@ -370,11 +409,9 @@
   79   │ #endif /* _GLIBCXX_IOSTREAM */
 ```
 
-- `<climits>`
-- `<cfloat>`
+</details>
 
-- [ ] Standard Template Library
-  - [ ] `<vector>`
+#### 
 
 <hr>
 
@@ -400,3 +437,46 @@
 | true         | false        | true
 | false        | true         | true
 | false        | false        | false
+
+### input validation
+
+```cpp
+int number {};
+cout << "Enter an integer between 0 and 100: ";
+cin >> number;
+// while (number <= 0 || number >= 100){
+//     cout << "Enter a valid integer: ";
+//     cin >> number;
+// }
+    // The program may go into an infinite loop when you enter 'sup' because the cin stream extraction operator (>>) fails to convert the input to an integer, and sets the fail bit on the stream. Once the fail bit is set, all subsequent attempts to extract data from the stream will fail until the fail bit is cleared. However, the program enters an infinite loop because it does not clear the fail bit before the loop continues.
+    // To fix this issue, you can add a call to cin.clear() to clear the fail bit before each input operation, and add a call to cin.ignore() to discard any extraneous characters in the input stream. Here's the modified code:
+while (cin.fail() || number <= 0 || number >= 100){
+    cin.clear();          // clear the fail bit
+    cin.ignore(1000, '\n');// discard extraneous characters
+    cout << "Enter a valid integer: ";
+    cin >> number;
+}
+cout << "Thanks" << endl;
+    // The fail bit is one of the error bits used by the input/output library in C++ to indicate an error in reading or writing data. It is set by the input/output library when a failure occurs in reading or writing data.
+    // When you input a string "sup" into an integer variable number using cin, it tries to read the string and convert it to an integer. Since "sup" is not a valid integer, the fail bit is set by cin, indicating that the input operation has failed.
+    // When the fail bit is set, the stream is considered to be in a fail state. In this state, further input operations on the stream will not succeed until the fail bit is cleared.
+    // In the case of your code, when cin sets the fail bit, the input operation in the while loop does not execute, causing an infinite loop. To fix this, you can clear the fail bit using cin.clear() and discard the invalid input using cin.ignore(). This way, the input operation in the while loop can execute again, and the user can input a valid integer.
+```
+
+
+### ...member functions 
+
+Technically, `.clear()`, `.fail()`, `.size()`, and other similar constructs in C++ are called member functions.
+
+A member function is a function that belongs to a class or an object and is used to manipulate or access the object's data. It is defined inside a class definition and can be called on an instance of the class or object.
+
+In the case of C++ input/output streams, these member functions are part of the `std::istream` and `std::ostream` classes, which provide functionality for reading input and writing output, respectively.
+
+So, `.clear()`, `.fail()`, `.size()`, etc. are member functions of these classes and are used to manipulate or access the stream's internal data or state.
+
+---
+
+```cpp
+// cin >> char_array;
+cin.getline(char_array,50);
+```

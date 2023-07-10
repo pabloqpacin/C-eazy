@@ -10,17 +10,35 @@
                 "${file}",
                 "-o",
                 "${fileDirname}/${fileBasenameNoExtension}",
-                "-ftime-report", // src: https://stackoverflow.com/questions/3025443/how-to-calculate-gcc-compilation-time
+                "-ftime-report",
                 // "-ftime-report-details",
                 "-Wall",
                 "-Wextra",
+                "-Wpedantic",
+                // "-Werror",
                 "-Wuninitialized",
                 "-Wnarrowing",
                 "-Wconversion",
+                "-Wenum-conversion",
                 "-Wswitch",
                 "-Wswitch-enum",
-                // "-Wpedantic",
-                // "-Werror"
+                "-Wmissing-declarations",
+                // "-Wmissing-prototypes",              // C only
+                // "-Wimplicit",                        // C only
+                // "-Wimplicit-int",                    // C only
+                // "-Wimplicit-function-declaration",   // C only
+                // "-Wstrict-prototypes",               // C only
+                // "-Wno-builtin-declaration-mismatch",
+                // "-Wmissing-format-attribute",
+                // "-Wundef",
+                // "-Wno-undef",
+                // LINKER:
+                // "-Wl,--verbose",
+                // "-Wl,--warn-common",
+                // "-Wl, --no-undefined",
+                // "-Wl,--unresolved-symbols",
+                // "-Wl,--fatal-warnings",
+                // "-Wl,--warn-unresolved-symbols",
             ],
             "options": {
                 "cwd": "${fileDirname}"

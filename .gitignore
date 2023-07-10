@@ -3,10 +3,9 @@
 *.log
 
 # Ignore backups, mocks and tests
-*test/
-*mock/
-bak/
-*-bak*
+*test*
+*mock*
+*bak*
 
 # All PDF files
 *.pdf
